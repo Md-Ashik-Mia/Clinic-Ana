@@ -1,0 +1,102 @@
+// components/WorkingHours.tsx
+'use client';
+
+import { useWorkingHours } from '../../hooks/useWorkingHours';
+
+type WorkingHour = {
+  id: number | string;
+  start_time?: string | null;
+  end_time?: string | null;
+  days?: string | null;
+  closed_days?: string | null;
+};
+
+function formatTimeForDisplay(time: string | null | undefined, separator: ':' | '.'): string {
+  if (!time || typeof time !== 'string') return '';
+  // Expected backend format: HH:MM:SS
+  const [hhRaw, mmRaw] = time.split(':');
+  const hours = String(parseInt(hhRaw ?? '0', 10));
+  const minutes = String(parseInt(mmRaw ?? '0', 10)).padStart(2, '0');
+  return `${hours}${separator}${minutes}`;
+}
+
+function normalizeDayLabel(days: string | null | undefined, closedDays: string | null | undefined): string {
+  const label = (days || closedDays || '').trim();
+  if (!label) return 'No specific days';
+
+  // Common abbreviations to match the UI (e.g. Monday-Thursday -> Mon-Thu)
+  const map: Record<string, string> = {
+    Monday: 'Mon',
+    Tuesday: 'Tue',
+    Wednesday: 'Wed',
+    Thursday: 'Thu',
+    Friday: 'Friday',
+    Saturday: 'Saturday',
+    Sunday: 'Sunday',
+  };
+
+  // Handle ranges like "Monday-Thursday" or "Monday-Friday"
+  const rangeMatch = label.match(/^([A-Za-z]+)\s*-\s*([A-Za-z]+)$/);
+  if (rangeMatch) {
+    const fromKey = rangeMatch[1];
+    const toKey = rangeMatch[2];
+    const from = map[fromKey] ?? fromKey;
+    const to = map[toKey] ?? toKey;
+    // Prefer Mon-Fri style for Friday as well
+    const toShort = to === 'Friday' ? 'Fri' : to;
+    return `${from}-${toShort}`;
+  }
+
+  return map[label] ?? label;
+}
+
+export default function WorkingHours() {
+  const { data: workingHours, isLoading, isError } = useWorkingHours();
+  const items = (workingHours ?? []) as WorkingHour[];
+
+  if (isLoading) return (
+    <div className="flex justify-center items-center py-20">
+      <div className="text-lg">Loading working hours...</div>
+    </div>
+  );
+
+  if (isError) return (
+    <div className="flex justify-center items-center py-20">
+      <div className="text-lg text-red-500">Error loading working hours. Please try again later.</div>
+    </div>
+  );
+
+  return (
+    <section className="bg-background py-16 px-4">
+      <div className="mx-auto max-w-6xl text-center">
+        <h2 className="text-4xl md:text-5xl font-bold">
+          Our <span className="text-primary">Working</span> Hours
+        </h2>
+        <p className="mx-auto mt-4 max-w-2xl text-base md:text-lg text-gray-600">
+          Check our weekly schedule and book your appointment at a convenient time.
+        </p>
+
+        <div className="mt-10 flex flex-wrap justify-center gap-2.5">
+          {items.map((item: WorkingHour) => {
+            const label = normalizeDayLabel(item?.days, item?.closed_days);
+            const isClosed = Boolean(item?.closed_days) || !item?.start_time || !item?.end_time;
+
+            const start = formatTimeForDisplay(item?.start_time, ':');
+            const end = formatTimeForDisplay(item?.end_time, '.');
+            const timeText = isClosed ? '(Closed)' : `(${start}-${end})`;
+
+            return (
+              <div
+                key={item.id}
+                className="h-[157px] w-[289.67px] rounded-md bg-secondary px-9 py-3.5 flex flex-col justify-center gap-2.5"
+              >
+                <div className="text-lg font-medium text-gray-900">{label}</div>
+                <div className="text-2xl font-semibold text-gray-700">{timeText}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}

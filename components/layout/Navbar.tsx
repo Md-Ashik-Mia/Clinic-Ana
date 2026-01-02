@@ -198,7 +198,6 @@ export default function Navbar() {
             width={140}
             height={20}
             className="mb-4"
-            style={{ width: "auto", height: "auto" }}
           />
         </Link>
 

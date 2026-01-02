@@ -2,6 +2,11 @@ import PageHeader from '@/components/shared/PageHeader';
 import BookDirectlySection from './component/BookDirectlySection';
 import ContactInfoRow from './component/ContactInfoRow';
 import ReachOutSection from './component/ReachOutSection';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Contact',
+};
 
 export default function ContactPage() {
   return (

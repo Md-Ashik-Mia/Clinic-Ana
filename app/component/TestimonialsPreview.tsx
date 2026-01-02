@@ -171,7 +171,7 @@ export default function TestimonialsPreview() {
 												{/* subtle shadow/ring underlay */}
 												<div className="absolute -left-0.5 bottom-0 w-23.75 h-26.75">
 													{/* <div className="absolute left-0 bottom-0 w-6 h-12 bg-[#E6F6F4] shadow-sm ring-1 ring-black/5 rounded-sm" /> */}
-													<div className="absolute left-0 -bottom-14 w-23.75 h-26.75 bg-[#E6F6F4] shadow-sm ring-1 ring-black/5 [clip-path:polygon(0%_0%,100%_0%,0%_100%)] rounded-[2px]" />
+													<div className="absolute left-0 -bottom-14 w-23.75 h-26.75 bg-[#E6F6F4] shadow-sm  ring-black/5 [clip-path:polygon(0%_0%,100%_0%,0%_100%)] rounded-[2px]" />
 												</div>
 											</div>
 

@@ -5,6 +5,11 @@ import SpecializedTreatments from "./component/SpecializedTreatments";
 import TestimonialsPreview from "./component/TestimonialsPreview";
 import WhyChooseUs from "./component/WhyChooseUs";
 import WorkingHours from "./component/WorkingHours";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Home',
+};
 
 export default function HomePage() {
   return (

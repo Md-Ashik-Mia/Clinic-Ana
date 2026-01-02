@@ -79,12 +79,12 @@ export default function ContactInfoRow() {
   const location = clinicInfo?.location ?? '';
 
   const hourItems = (workingHours ?? []) as WorkingHour[];
-  const topHours = hourItems.slice(0, 2).map((item) => {
+  const topHours = hourItems.map((item) => {
     const labelRaw = normalizeDayLabel(item?.days, item?.closed_days);
     const isClosed = Boolean(item?.closed_days) || !item?.start_time || !item?.end_time;
 
     const start = formatTimeForDisplay(item?.start_time, ':');
-    const end = formatTimeForDisplay(item?.end_time, '.');
+    const end = formatTimeForDisplay(item?.end_time, ':');
     const timeText = isClosed ? t('footer.closed') : `(${start}-${end})`;
 
     const label = (() => {

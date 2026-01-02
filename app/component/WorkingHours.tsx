@@ -86,7 +86,7 @@ export default function WorkingHours() {
 
   return (
     <section className="bg-background py-16 px-4">
-      <div className="mx-auto max-w-6xl text-center">
+      <div className="mx-auto container text-center">
         <SectionTitle
           className="mb-14"
           greenText={t('workingHours.titleGreen')}

@@ -63,7 +63,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { SiWhatsapp } from "react-icons/si";
 
-
 export default function HeroSection() {
   const { data: clinicInfo } = useClinicInfo();
   const { t } = useLanguage();
@@ -153,12 +152,12 @@ export default function HeroSection() {
                 </span>
                 {t("home.hero.bookOnWhatsapp")}
               </a>
-				<Link
-					href="/services"
-					className="btn-interactive inline-flex items-center justify-center p-3 border-2 border-[#212121] font-semibold rounded-4xl"
-				>
-					{t("home.hero.viewTreatments")}
-				</Link>
+              <Link
+                href="/services"
+                className="btn-interactive inline-flex items-center justify-center p-3 border-2 border-[#212121] font-semibold rounded-4xl"
+              >
+                {t("home.hero.viewTreatments")}
+              </Link>
             </div>
           </div>
         </div>
@@ -167,7 +166,6 @@ export default function HeroSection() {
           <div className="bg-[url('/images/hero/hero-section.png')] bg-contain bg-no-repeat bg-center w-full h-[360px] sm:h-[480px] lg:h-[750px] relative" />
         </div>
       </div>
-
     </section>
   );
 }

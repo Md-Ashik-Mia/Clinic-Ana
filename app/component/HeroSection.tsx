@@ -55,11 +55,18 @@
 //   );
 // }
 
+"use client";
+
+import { getWhatsAppHref, useClinicInfo } from "@/hooks/useClinicInfo";
 import Image from "next/image";
+import Link from "next/link";
 import { SiWhatsapp } from "react-icons/si";
 
 
 export default function HeroSection() {
+  const { data: clinicInfo } = useClinicInfo();
+  const whatsappHref = getWhatsAppHref(clinicInfo?.whatsapp_numbers ?? null);
+
   return (
     <section className="relative min-h-screen w-full overflow-hidden">
       {/* Background Image */}
@@ -73,6 +80,12 @@ export default function HeroSection() {
           sizes="(max-width: 768px) 100vw, 50vw" // Added sizes for optimization
         />
       </div>
+
+      {/* Bottom blur fade (smooth transition into next section) */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 -bottom-7 z-20 h-20 sm:h-25 lg:h-22 bg-gradient-to-b from-transparent via-background/70 to-background backdrop-blur-[27px]"
+      />
 
       {/* Content Overlay */}
       <div className="relative z-10 container mx-auto px-6 pt-28 lg:pt-48 flex flex-col lg:flex-row justify-between items-center gap-12">
@@ -128,13 +141,23 @@ export default function HeroSection() {
               environment focused on your long-term well-being.
             </p>
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-10">
-              <button className="flex justify-center items-center gap-3.5 text-white bg-[#00A991] px-6 py-3 rounded-full">
+              <a
+                href={whatsappHref || undefined}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-interactive flex justify-center items-center gap-3.5 text-white bg-[#00A991] px-6 py-3 rounded-full"
+              >
                 <span className="text-2xl bg-[#1FAF38] text-[#60D669]">
                   <SiWhatsapp />
                 </span>
                 Book on WhatsApp
-              </button>
-              <button className="p-3 border-2 border-[#212121] font-semibold rounded-4xl">View Treatments</button>
+              </a>
+				<Link
+					href="/services"
+					className="btn-interactive inline-flex items-center justify-center p-3 border-2 border-[#212121] font-semibold rounded-4xl"
+				>
+					View Treatments
+				</Link>
             </div>
           </div>
         </div>
@@ -143,6 +166,7 @@ export default function HeroSection() {
           <div className="bg-[url('/images/hero/hero-section.png')] bg-contain bg-no-repeat bg-center w-full h-[360px] sm:h-[480px] lg:h-[750px] relative" />
         </div>
       </div>
+
     </section>
   );
 }

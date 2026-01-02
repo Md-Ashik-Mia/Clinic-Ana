@@ -150,11 +150,13 @@
 
 "use client";
 
+import { getWhatsAppHref, useClinicInfo } from "@/hooks/useClinicInfo";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
+import { SiWhatsapp } from "react-icons/si";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -164,12 +166,15 @@ const navItems = [
   { label: "Contact", href: "/contact" },
 ];
 
-const activeStyle = "bg-primary text-white";
+const activeStyle = "bg-[#00A991] text-white px-2 py-1 rounded-[4px] font-medium text-[16px]";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const { data: clinicInfo } = useClinicInfo();
+  const whatsappHref = getWhatsAppHref(clinicInfo?.whatsapp_numbers ?? null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -209,10 +214,10 @@ export default function Navbar() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`px-4 py-5 rounded-md text-lg font-medium transition-all ${
+                  className={`transition-all ${
                     isActive
                       ? activeStyle
-                      : "text-slate-700 hover:bg-primary/10 hover:text-primary"
+                      : "text-[#212121] px-2 py-1 rounded-sm font-medium text-[16px] hover:bg-primary/10 hover:text-primary"
                   }`}
                 >
                   {item.label}
@@ -224,6 +229,15 @@ export default function Navbar() {
 
         {/* Right controls */}
         <div className="flex items-center gap-2">
+          <a
+            href={whatsappHref || undefined}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="WhatsApp"
+            className="icon-interactive hidden md:inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary text-white"
+          >
+            <SiWhatsapp className="h-5 w-5" />
+          </a>
           {/* Language (desktop) */}
           <div className="hidden md:flex gap-2">
             <button className="px-3 py-1 text-xs rounded-full bg-primary text-white">
@@ -237,7 +251,7 @@ export default function Navbar() {
           {/* Hamburger (mobile) */}
           <button
             type="button"
-            className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-slate-700 hover:bg-primary/10 hover:text-primary transition"
+            className="icon-interactive md:hidden inline-flex items-center justify-center rounded-md p-2 text-slate-700 hover:bg-primary/10 hover:text-primary transition"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((v) => !v)}
@@ -251,6 +265,17 @@ export default function Navbar() {
       {mobileOpen && (
         <div className="md:hidden border-t border-slate-200 bg-white/90 backdrop-blur-lg shadow-md">
           <div className="container mx-auto px-6 py-4">
+            {whatsappHref && (
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-interactive mb-4 inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-4 py-3 text-base font-medium text-white"
+              >
+                <SiWhatsapp className="h-5 w-5" />
+                Book on WhatsApp
+              </a>
+            )}
             <ul className="flex flex-col gap-2">
               {navItems.map((item) => {
                 const isActive =

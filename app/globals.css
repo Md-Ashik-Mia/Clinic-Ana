@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "react-toastify/dist/ReactToastify.css";
 
 :root {
   --background: ;
@@ -41,4 +42,36 @@ body {
 }
 .text-grayColor{
   color :#525252;
+}
+
+@keyframes clinic-marquee-rtl {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.clinic-marquee-track {
+  will-change: transform;
+  animation-name: clinic-marquee-rtl;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@layer utilities {
+  .btn-interactive {
+    @apply cursor-pointer select-none transition-transform duration-200 ease-out hover:scale-105 active:scale-95;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-transparent;
+  }
+
+  .btn-interactive:disabled {
+    @apply cursor-not-allowed hover:scale-100 active:scale-100;
+  }
+
+  .icon-interactive {
+    @apply cursor-pointer select-none transition-transform duration-200 ease-out hover:scale-110 active:scale-95;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-transparent;
+  }
 }

@@ -1,6 +1,7 @@
 // components/WorkingHours.tsx
 'use client';
 
+import SectionTitle from '@/components/shared/SectionTitle';
 import { useWorkingHours } from '../../hooks/useWorkingHours';
 
 type WorkingHour = {
@@ -69,12 +70,14 @@ export default function WorkingHours() {
   return (
     <section className="bg-background py-16 px-4">
       <div className="mx-auto max-w-6xl text-center">
-        <h2 className="text-4xl md:text-5xl font-bold">
-          Our <span className="text-primary">Working</span> Hours
-        </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-base md:text-lg text-gray-600">
-          Check our weekly schedule and book your appointment at a convenient time.
-        </p>
+        <SectionTitle
+          className="mb-14"
+          greenText="Our Working "
+          blackText="Hours"
+          description="Check our weekly schedule and book your appointment at a convenient time."
+          descriptionClassName="mx-auto mt-4 lg:max-w-4xl text-base md:text-2xl text-grayColor"
+          titleClassName="text-[42px] font-semibold"
+        />
 
         <div className="mt-10 flex flex-wrap justify-center gap-2.5">
           {items.map((item: WorkingHour) => {
@@ -88,10 +91,10 @@ export default function WorkingHours() {
             return (
               <div
                 key={item.id}
-                className="h-[157px] w-[289.67px] rounded-md bg-secondary px-9 py-3.5 flex flex-col justify-center gap-2.5"
+                className="h-39.25 w-70 rounded-md bg-[#E6F6F4] px-9 py-3.5 flex flex-col justify-center gap-2.5"
               >
-                <div className="text-lg font-medium text-gray-900">{label}</div>
-                <div className="text-2xl font-semibold text-gray-700">{timeText}</div>
+                <div className="text-3xl  text-blackColor">{label}</div>
+                <div className="text-[32px] font-bold text-grayColor">{timeText}</div>
               </div>
             );
           })}

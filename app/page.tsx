@@ -1,4 +1,9 @@
+import Footer from "@/components/layout/Footer";
+import CTASection from "./component/CTASection";
 import HeroSection from "./component/HeroSection";
+import SpecializedTreatments from "./component/SpecializedTreatments";
+import TestimonialsPreview from "./component/TestimonialsPreview";
+import WhyChooseUs from "./component/WhyChooseUs";
 import WorkingHours from "./component/WorkingHours";
 
 export default function HomePage() {
@@ -11,6 +16,16 @@ export default function HomePage() {
         {/* Working Hours */}
         <WorkingHours />
       </section>
+
+      <SpecializedTreatments />
+
+      <WhyChooseUs />
+
+      <TestimonialsPreview />
+
+      <CTASection />
+
+      <Footer />
     </>
   );
 }

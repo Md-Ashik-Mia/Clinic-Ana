@@ -26,10 +26,10 @@ export default function RootLayout({
       <body
         className={`${lato.variable} antialiased`}
       >
-         <Navbar />
-         <QueryProvider>
-          {children}
-          </QueryProvider>
+			<QueryProvider>
+				<Navbar />
+				{children}
+			</QueryProvider>
       </body>
     </html>
   );

@@ -74,7 +74,7 @@ export default function ReachOutSection() {
   };
 
   return (
-    <section className="px-4 mb-40">
+    <section className="px-4 mb-20">
       <ToastContainer />
       <div className="container mx-auto">
         <div className="rounded-3xl bg-[#E6F6F4] px-6 py-8 lg:px-10 lg:py-10">
@@ -95,7 +95,7 @@ export default function ReachOutSection() {
                     required
                     value={form.name}
                     onChange={(e) => onChange('name', e.target.value)}
-                    className="mt-2 w-full h-11.5 rounded-xl px-4 text-blackColor border border-transparent border-b border-b-[#525252] outline-none"
+                    className="mt-2 w-full h-11.5 rounded-xl px-4 text-blackColor border border-transparent border-b-2 border-b-[#525252] outline-none"
                     style={{ backgroundColor: INPUT_BG }}
                   />
                 </div>
@@ -109,7 +109,7 @@ export default function ReachOutSection() {
                     type="email"
                     value={form.email}
                     onChange={(e) => onChange('email', e.target.value)}
-                    className="mt-2 w-full h-11.5 rounded-xl px-4 text-blackColor border border-transparent border-b border-b-[#525252] outline-none"
+                    className="mt-2 w-full h-11.5 rounded-xl px-4 text-blackColor border border-transparent border-b-2 border-b-[#525252] outline-none"
                     style={{ backgroundColor: INPUT_BG }}
                   />
                 </div>
@@ -123,7 +123,7 @@ export default function ReachOutSection() {
                     inputMode="tel"
                     value={form.phone}
                     onChange={(e) => onChange('phone', e.target.value)}
-                    className="mt-2 w-full h-11.5 rounded-xl px-4 text-blackColor border border-transparent border-b border-b-[#525252] outline-none"
+                    className="mt-2 w-full h-11.5 rounded-xl px-4 text-blackColor border border-transparent border-b-2 border-b-[#525252] outline-none"
                     style={{ backgroundColor: INPUT_BG }}
                   />
                 </div>
@@ -136,7 +136,7 @@ export default function ReachOutSection() {
                     required
                     value={form.subject}
                     onChange={(e) => onChange('subject', e.target.value)}
-                    className="mt-2 w-full h-11.5 rounded-xl px-4 text-blackColor border border-transparent border-b border-b-[#525252] outline-none"
+                    className="mt-2 w-full h-11.5 rounded-xl px-4 text-blackColor border border-transparent border-b-2 border-b-[#525252] outline-none"
                     style={{ backgroundColor: INPUT_BG }}
                   >
                     <option value="" disabled>
@@ -157,7 +157,7 @@ export default function ReachOutSection() {
                     required
                     value={form.message}
                     onChange={(e) => onChange('message', e.target.value)}
-                    className="mt-2 w-full h-42.75 rounded-xl px-4 py-3 text-blackColor border border-transparent border-b border-b-[#525252] outline-none resize-none"
+                    className="mt-2 w-full h-42.75 rounded-xl px-4 py-3 text-blackColor border border-transparent border-b-2 border-b-[#525252] outline-none resize-none"
                     style={{ backgroundColor: INPUT_BG }}
                   />
                 </div>
@@ -183,7 +183,7 @@ export default function ReachOutSection() {
             </div>
 
             {/* Right: Map */}
-            <div>
+            <div className="h-full flex flex-col justify-center ">
               <div className="w-full overflow-hidden rounded-[20px] bg-white">
                 <iframe
                   title="Clinic Map"

@@ -150,21 +150,21 @@
 
 "use client";
 
-import { getWhatsAppHref, useClinicInfo } from "@/hooks/useClinicInfo";
+import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
+import { useLanguage } from "@/hooks/useLanguage";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
-import { SiWhatsapp } from "react-icons/si";
 
 const navItems = [
-  { label: "Home", href: "/" },
-  { label: "Services", href: "/services" },
-  { label: "About us", href: "/about" },
-  { label: "Testimonials", href: "/testimonials" },
-  { label: "Contact", href: "/contact" },
-];
+  { key: "nav.home", href: "/" },
+  { key: "nav.services", href: "/services" },
+  { key: "nav.about", href: "/about" },
+  { key: "nav.testimonials", href: "/testimonials" },
+  { key: "nav.contact", href: "/contact" },
+] as const;
 
 const activeStyle = "bg-[#00A991] text-white px-2 py-1 rounded-[4px] font-medium text-[16px]";
 
@@ -173,8 +173,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const { data: clinicInfo } = useClinicInfo();
-  const whatsappHref = getWhatsAppHref(clinicInfo?.whatsapp_numbers ?? null);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -220,7 +219,7 @@ export default function Navbar() {
                       : "text-[#212121] px-2 py-1 rounded-sm font-medium text-[16px] hover:bg-primary/10 hover:text-primary"
                   }`}
                 >
-                  {item.label}
+                  {t(item.key)}
                 </Link>
               </li>
             );
@@ -229,23 +228,9 @@ export default function Navbar() {
 
         {/* Right controls */}
         <div className="flex items-center gap-2">
-          <a
-            href={whatsappHref || undefined}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="WhatsApp"
-            className="icon-interactive hidden md:inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary text-white"
-          >
-            <SiWhatsapp className="h-5 w-5" />
-          </a>
           {/* Language (desktop) */}
-          <div className="hidden md:flex gap-2">
-            <button className="px-3 py-1 text-xs rounded-full bg-primary text-white">
-              EN
-            </button>
-            <button className="px-3 py-1 text-xs rounded-full border">
-              ES
-            </button>
+          <div className="hidden md:flex">
+            <LanguageSwitcher />
           </div>
 
           {/* Hamburger (mobile) */}
@@ -265,17 +250,6 @@ export default function Navbar() {
       {mobileOpen && (
         <div className="md:hidden border-t border-slate-200 bg-white/90 backdrop-blur-lg shadow-md">
           <div className="container mx-auto px-6 py-4">
-            {whatsappHref && (
-              <a
-                href={whatsappHref}
-                target="_blank"
-                rel="noreferrer"
-                className="btn-interactive mb-4 inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-4 py-3 text-base font-medium text-white"
-              >
-                <SiWhatsapp className="h-5 w-5" />
-                Book on WhatsApp
-              </a>
-            )}
             <ul className="flex flex-col gap-2">
               {navItems.map((item) => {
                 const isActive =
@@ -294,20 +268,15 @@ export default function Navbar() {
                           : "text-slate-700 hover:bg-primary/10 hover:text-primary"
                       }`}
                     >
-                      {item.label}
+                      {t(item.key)}
                     </Link>
                   </li>
                 );
               })}
             </ul>
 
-            <div className="mt-4 flex gap-2">
-              <button className="px-3 py-1 text-xs rounded-full bg-primary text-white">
-                EN
-              </button>
-              <button className="px-3 py-1 text-xs rounded-full border">
-                ES
-              </button>
+            <div className="mt-4 flex">
+              <LanguageSwitcher />
             </div>
           </div>
         </div>

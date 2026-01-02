@@ -1,4 +1,5 @@
 import Navbar from "@/components/layout/Navbar";
+import { LanguageProvider } from "@/hooks/useLanguage";
 import { QueryProvider } from "@/lib/queryProvider";
 import type { Metadata } from "next";
 import { Lato } from "next/font/google";
@@ -26,10 +27,12 @@ export default function RootLayout({
       <body
         className={`${lato.variable} antialiased`}
       >
-			<QueryProvider>
-				<Navbar />
-				{children}
-			</QueryProvider>
+      <QueryProvider>
+        <LanguageProvider>
+          <Navbar />
+          {children}
+        </LanguageProvider>
+      </QueryProvider>
       </body>
     </html>
   );

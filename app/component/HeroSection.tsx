@@ -58,6 +58,7 @@
 "use client";
 
 import { getWhatsAppHref, useClinicInfo } from "@/hooks/useClinicInfo";
+import { useLanguage } from "@/hooks/useLanguage";
 import Image from "next/image";
 import Link from "next/link";
 import { SiWhatsapp } from "react-icons/si";
@@ -65,6 +66,7 @@ import { SiWhatsapp } from "react-icons/si";
 
 export default function HeroSection() {
   const { data: clinicInfo } = useClinicInfo();
+  const { t } = useLanguage();
   const whatsappHref = getWhatsAppHref(clinicInfo?.whatsapp_numbers ?? null);
 
   return (
@@ -127,18 +129,17 @@ export default function HeroSection() {
         <div className="w-full lg:w-1/2">
           <div className="w-full relative flex flex-col justify-center">
             <h1 className="font-semibold text-3xl sm:text-4xl lg:text-5xl oceanGreen-color">
-              Advanced
+              {t("home.hero.advanced")}
             </h1>
             <h1 className="text-5xl sm:text-6xl lg:text-8xl font-extrabold leading-tight secondary-color my-4">
-              Physiotherapy
+              {t("home.hero.physiotherapy")}
             </h1>
 
             <p className="text-2xl sm:text-3xl lg:text-[42px] mt-6 text-blackColor font-semibold">
-              for Pain Relief & Mobility
+              {t("home.hero.tagline")}
             </p>
             <p className="text-base sm:text-lg mt-4 max-w-lg textHeading-color mb-10 lg:mb-24">
-              Experience expert physiotherapy care in a warm, supportive
-              environment focused on your long-term well-being.
+              {t("home.hero.description")}
             </p>
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-10">
               <a
@@ -150,13 +151,13 @@ export default function HeroSection() {
                 <span className="text-2xl bg-[#1FAF38] text-[#60D669]">
                   <SiWhatsapp />
                 </span>
-                Book on WhatsApp
+                {t("home.hero.bookOnWhatsapp")}
               </a>
 				<Link
 					href="/services"
 					className="btn-interactive inline-flex items-center justify-center p-3 border-2 border-[#212121] font-semibold rounded-4xl"
 				>
-					View Treatments
+					{t("home.hero.viewTreatments")}
 				</Link>
             </div>
           </div>

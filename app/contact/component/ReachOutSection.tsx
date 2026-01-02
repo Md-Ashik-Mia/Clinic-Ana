@@ -6,6 +6,7 @@ import { RiSendPlaneFill } from 'react-icons/ri';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { useClinicInfo } from '@/hooks/useClinicInfo';
+import { useLanguage } from '@/hooks/useLanguage';
 import axiosInstance from '@/lib/axiosInstance';
 
 type ContactPayload = {
@@ -20,6 +21,7 @@ const INPUT_BG = '#D9F2EF';
 
 export default function ReachOutSection() {
   const { data: clinicInfo } = useClinicInfo();
+  const { t } = useLanguage();
 
   const [form, setForm] = useState<ContactPayload>({
     name: '',
@@ -59,12 +61,12 @@ export default function ReachOutSection() {
         message: form.message.trim(),
       });
       onCancel();
-      toast.success('Message sent successfully. We will contact you soon.', {
+      toast.success(t('toast.contact.success'), {
         position: 'top-center',
         autoClose: 3000,
       });
     } catch {
-      toast.error('Failed to send message. Please try again.', {
+      toast.error(t('toast.contact.error'), {
         position: 'top-center',
         autoClose: 3500,
       });
@@ -81,15 +83,15 @@ export default function ReachOutSection() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
             {/* Left: Title + form */}
             <div>
-              <h2 className="text-[32px] font-semibold leading-none text-[#1A1A1A]">Reach Out Anytime</h2>
+              <h2 className="text-[32px] font-semibold leading-none text-[#1A1A1A]">{t('contact.reachOut.title')}</h2>
               <p className="mt-2 max-w-97.5 text-[14px] text-[#525252]">
-                We&apos;re here to answer your questions and assist with your physiotherapy needs.
+                {t('contact.reachOut.subtitle')}
               </p>
 
               <form onSubmit={onSubmit} className="mt-6 w-full max-w-102.5 space-y-5">
                 <div>
                   <label className="block text-blackColor text-[20px] leading-none">
-                    Name<span className="text-red-500">*</span>
+                    {t('contact.form.name')}<span className="text-red-500">*</span>
                   </label>
                   <input
                     required
@@ -102,7 +104,7 @@ export default function ReachOutSection() {
 
                 <div>
                   <label className="block text-blackColor text-[20px] leading-none">
-                    Email<span className="text-red-500">*</span>
+                    {t('contact.form.email')}<span className="text-red-500">*</span>
                   </label>
                   <input
                     required
@@ -116,7 +118,7 @@ export default function ReachOutSection() {
 
                 <div>
                   <label className="block text-blackColor text-[20px] leading-none">
-                    Phone<span className="text-red-500">*</span>
+                    {t('contact.form.phone')}<span className="text-red-500">*</span>
                   </label>
                   <input
                     required
@@ -130,7 +132,7 @@ export default function ReachOutSection() {
 
                 <div>
                   <label className="block text-blackColor text-[20px] leading-none">
-                    Subject<span className="text-red-500">*</span>
+                    {t('contact.form.subject')}<span className="text-red-500">*</span>
                   </label>
                   <select
                     required
@@ -140,18 +142,18 @@ export default function ReachOutSection() {
                     style={{ backgroundColor: INPUT_BG }}
                   >
                     <option value="" disabled>
-                      Select subject
+                      {t('contact.form.selectSubject')}
                     </option>
-                    <option value="General">General</option>
-                    <option value="Appointment">Appointment</option>
-                    <option value="Treatment">Treatment</option>
-                    <option value="Other">Other</option>
+                    <option value="General">{t('contact.form.subject.general')}</option>
+                    <option value="Appointment">{t('contact.form.subject.appointment')}</option>
+                    <option value="Treatment">{t('contact.form.subject.treatment')}</option>
+                    <option value="Other">{t('contact.form.subject.other')}</option>
                   </select>
                 </div>
 
                 <div>
                   <label className="block text-blackColor text-[20px] leading-none">
-                    Message<span className="text-red-500">*</span>
+                    {t('contact.form.message')}<span className="text-red-500">*</span>
                   </label>
                   <textarea
                     required
@@ -168,7 +170,7 @@ export default function ReachOutSection() {
                     disabled={isSubmitting}
                     className="btn-interactive h-10.5 rounded-[20px] px-7.75 py-1.5 bg-[#00A991] text-white flex items-center justify-center gap-2.5 disabled:opacity-60"
                   >
-                    <span className="text-base">Send Message</span>
+                    <span className="text-base">{t('contact.form.send')}</span>
                     <RiSendPlaneFill className="text-base" />
                   </button>
                   <button
@@ -176,7 +178,7 @@ export default function ReachOutSection() {
                     onClick={onCancel}
                     className="btn-interactive h-10.5 rounded-[20px] px-7.75 py-1.5 border border-black/70 text-blackColor"
                   >
-                    <span className="text-base">Cancel</span>
+                    <span className="text-base">{t('common.cancel')}</span>
                   </button>
                 </div>
               </form>
@@ -202,7 +204,7 @@ export default function ReachOutSection() {
                   className="btn-interactive h-10.5 rounded-[20px] px-7.75 py-1.5 bg-[#00A991] text-white flex items-center justify-center gap-2.5"
                 >
                   <FiNavigation className="text-base" />
-                  <span className="text-[22px] font-semibold leading-none">Get Directions</span>
+                  <span className="text-[22px] font-semibold leading-none">{t('contact.directions')}</span>
                 </a>
               </div>
             </div>

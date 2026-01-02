@@ -5,6 +5,7 @@
 import { useMemo, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
+import { useLanguage } from '@/hooks/useLanguage';
 import { useReviews } from '@/hooks/useReviews';
 import axiosInstance from '@/lib/axiosInstance';
 import type { Review } from '@/types/review';
@@ -26,6 +27,12 @@ function initialsFromName(name: string) {
 }
 
 function StarsRow({ value, onChange }: { value: number; onChange?: (v: number) => void }) {
+	const { language } = useLanguage();
+	const ariaLabel = (star: number) => {
+		if (language === 'es') return `Calificar ${star} estrella${star > 1 ? 's' : ''}`;
+		return `Rate ${star} star${star > 1 ? 's' : ''}`;
+	};
+
 	return (
 		<div className="flex items-center gap-3">
 			{Array.from({ length: 5 }).map((_, idx) => {
@@ -37,7 +44,7 @@ function StarsRow({ value, onChange }: { value: number; onChange?: (v: number) =
 						type="button"
 						onClick={onChange ? () => onChange(star) : undefined}
 						className="leading-none"
-						aria-label={`Rate ${star} star${star > 1 ? 's' : ''}`}
+						aria-label={ariaLabel(star)}
 					>
 						<span className={filled ? 'text-[#F28C28] text-xl' : 'text-black/50 text-xl'}>
 							★
@@ -50,6 +57,7 @@ function StarsRow({ value, onChange }: { value: number; onChange?: (v: number) =
 }
 
 function ReviewItem({ review }: { review: Review }) {
+	const { t } = useLanguage();
 	const name = (review.name ?? 'Patient').trim() || 'Patient';
 	const comment = (review.comment ?? '').trim();
 	const rating = Number(review.rating ?? 0);
@@ -77,7 +85,7 @@ function ReviewItem({ review }: { review: Review }) {
 					</div>
 				</div>
 				<p className="mt-2 text-grayColor text-[14px] leading-[1.2] line-clamp-3">
-					{comment || '—'}
+					{comment || t('common.emptyDash')}
 				</p>
 			</div>
 		</div>
@@ -95,6 +103,7 @@ type ReviewFormState = {
 const INPUT_BG = '#D9F2EF';
 
 export default function TestimonialsSection() {
+	const { t } = useLanguage();
 	const { data, isLoading, isError, refetch } = useReviews();
 	const reviews = useMemo(() => (data ?? []) as Review[], [data]);
 	const list = reviews.filter((r) => (r?.comment ?? '').trim().length > 0);
@@ -128,7 +137,7 @@ export default function TestimonialsSection() {
 		const comment = form.comment.trim();
 
 		if (!name || !email || !comment || form.rating <= 0) {
-			toast.error('Please fill all required fields and select rating.', { position: 'top-center', autoClose: 3000 });
+			toast.error(t('testimonials.form.validationError'), { position: 'top-center', autoClose: 3000 });
 			return;
 		}
 
@@ -145,11 +154,11 @@ export default function TestimonialsSection() {
 
 			await axiosInstance.post('/reviews/rating/', fd);
 
-			toast.success('Review submitted successfully.', { position: 'top-center', autoClose: 3000 });
+			toast.success(t('testimonials.toast.success'), { position: 'top-center', autoClose: 3000 });
 			onCancel();
 			await refetch();
 		} catch {
-			toast.error('Failed to submit review. Please try again.', { position: 'top-center', autoClose: 3500 });
+			toast.error(t('testimonials.toast.error'), { position: 'top-center', autoClose: 3500 });
 		} finally {
 			setIsSubmitting(false);
 		}
@@ -163,29 +172,29 @@ export default function TestimonialsSection() {
 					{/* Left: Recent Feedbacks */}
 					<div>
 						<h3 className="text-blackColor font-semibold text-[22px] sm:text-[24px] lg:text-[26px] leading-none">
-							Recent Feedbacks
+							{t('testimonials.recentFeedbacks')}
 						</h3>
 
 						<div className="mt-6 space-y-4 max-h-130 overflow-y-auto pr-1">
 							{isLoading ? (
-								<div className="text-grayColor">Loading reviews...</div>
+								<div className="text-grayColor">{t('common.loadingReviews')}</div>
 							) : isError ? (
-								<div className="text-grayColor">Failed to load reviews.</div>
+								<div className="text-grayColor">{t('common.failedLoadReviews')}</div>
 							) : list.length ? (
 								list.map((r) => <ReviewItem key={String(r.id)} review={r} />)
 							) : (
-								<div className="text-grayColor">No reviews yet.</div>
+								<div className="text-grayColor">{t('common.noReviews')}</div>
 							)}
 						</div>
 					</div>
 
 					{/* Right: Add a Review */}
 					<div>
-						<h3 className="text-blackColor font-semibold text-[24px] sm:text-[26px] leading-none">Add a Review</h3>
+						<h3 className="text-blackColor font-semibold text-[24px] sm:text-[26px] leading-none">{t('testimonials.addReview')}</h3>
 
 						<form onSubmit={onSubmit} className="mt-6">
 							<label className="block text-grayColor text-[14px] sm:text-[16px] font-medium">
-								Add Your Rating
+								{t('testimonials.form.addYourRating')}
 							</label>
 							<div className="mt-3">
 								<StarsRow value={form.rating} onChange={(v) => setForm((p) => ({ ...p, rating: v }))} />
@@ -193,7 +202,7 @@ export default function TestimonialsSection() {
 
 							<div className="mt-7">
 								<label className="block text-blackColor text-[20px] sm:text-[20px] font-medium">
-									Name<span className="text-red-500">*</span>
+									{t('testimonials.form.name')}<span className="text-red-500">*</span>
 								</label>
 								<input
 									value={form.name}
@@ -206,7 +215,7 @@ export default function TestimonialsSection() {
 
 							<div className="mt-6">
 								<label className="block text-blackColor text-[20px] sm:text-[20px] font-medium">
-									Email<span className="text-red-500">*</span>
+									{t('testimonials.form.email')}<span className="text-red-500">*</span>
 								</label>
 								<input
 									type="email"
@@ -220,7 +229,7 @@ export default function TestimonialsSection() {
 
 							<div className="mt-6">
 								<label className="block text-blackColor text-[20px] sm:text-[20px] font-medium">
-									Write Your Message<span className="text-red-500">*</span>
+									{t('testimonials.form.message')}<span className="text-red-500">*</span>
 								</label>
 								<textarea
 									value={form.comment}
@@ -233,12 +242,12 @@ export default function TestimonialsSection() {
 
 							<div className="mt-6">
 								<div className="text-blackColor text-[18px] sm:text-[20px] font-medium leading-none">
-									Media Upload <span className="text-grayColor text-[16px] font-normal">(optional)</span>
+									{t('testimonials.form.mediaUpload')} <span className="text-grayColor text-[16px] font-normal">{t('common.optionalParen')}</span>
 								</div>
 
 								<div className="mt-3 rounded-xl border-b-2 border-b-[#525252] px-8 py-6 text-center" style={{ backgroundColor: INPUT_BG }}>
-									<div className="text-blackColor text-[14px] font-normal">Drag your file to start uploading</div>
-									<div className="text-blackColor text-[14px] font-normal mt-2">or</div>
+									<div className="text-blackColor text-[14px] font-normal">{t('testimonials.form.dragToUpload')}</div>
+									<div className="text-blackColor text-[14px] font-normal mt-2">{t('common.or')}</div>
 
 									<input
 										ref={fileInputRef}
@@ -252,15 +261,15 @@ export default function TestimonialsSection() {
 										onClick={() => fileInputRef.current?.click()}
 										className="btn-interactive mt-3 inline-flex h-10.5 items-center justify-center rounded-[20px] border border-primary px-8 py-1.5 text-[14px] font-normal text-[#00A991]"
 									>
-										Browse Files
+										{t('testimonials.form.browseFiles')}
 									</button>
 
 									{form.file ? (
-										<div className="mt-3 text-grayColor text-[12px] truncate">Selected: {form.file.name}</div>
+										<div className="mt-3 text-grayColor text-[12px] truncate">{t('testimonials.form.selectedFile')}: {form.file.name}</div>
 									) : null}
 								</div>
 								<div className="mt-3 text-grayColor text-[14px] font-normal">
-									Only support - jpg, png and zip files.
+									{t('testimonials.form.supportedFiles')}
 								</div>
 							</div>
 
@@ -270,14 +279,14 @@ export default function TestimonialsSection() {
 									disabled={isSubmitting}
 									className="btn-interactive h-10.5 rounded-[20px] px-8 bg-[#00A991] text-white disabled:opacity-60"
 								>
-									Submit Now
+									{t('testimonials.form.submitNow')}
 								</button>
 								<button
 									type="button"
 									onClick={onCancel}
 									className="btn-interactive h-10.5 rounded-[20px] px-8 border border-black/70 text-blackColor"
 								>
-									Cancel
+									{t('common.cancel')}
 								</button>
 							</div>
 						</form>

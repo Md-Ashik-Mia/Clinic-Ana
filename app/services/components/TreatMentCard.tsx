@@ -1,3 +1,6 @@
+"use client";
+
+import { useLanguage } from "@/hooks/useLanguage";
 import type { Treatment } from "@/types/treatment";
 
 interface TreatMentCardProps {
@@ -5,7 +8,14 @@ interface TreatMentCardProps {
 }
 
 export default function TreatMentCard({ treatment }: TreatMentCardProps) {
-  const { photo, name_eng, title, description } = treatment;
+  const { language } = useLanguage();
+  const { photo, name_eng, name_es, title, title_es, description, description_es } = treatment;
+
+  const isEs = language === "es";
+
+  const displayTitle =
+    (isEs ? (name_es || title_es) : null) || name_eng || title || name_es || title_es || "";
+  const displayDescription = (isEs ? description_es : null) || description || description_es || "";
 
   // Fallback image if photo is missing
   const imageUrl =
@@ -23,17 +33,17 @@ export default function TreatMentCard({ treatment }: TreatMentCardProps) {
     >
       <img
         src={imageUrl}
-        alt={name_eng || title || "Treatment"}
+        alt={displayTitle || "Treatment"}
         className="w-full h-[220px] sm:h-[280px] md:h-[340px] lg:h-[464px] object-cover rounded-2xl transition-all"
         style={{ maxWidth: "100%" }}
         loading="lazy"
       />
       <div className="flex flex-col items-center px-2 sm:px-4 pb-4 sm:pb-6 pt-3 sm:pt-4 text-center w-full">
         <h3 className="font-bold text-[18px] sm:text-[22px] md:text-[28px] lg:text-[32px] leading-[1] text-[#1A1A1A] font-lato mb-2">
-          {name_eng || title}
+          {displayTitle}
         </h3>
         <p className="text-[13px] sm:text-[15px] md:text-[16px] text-[#525252] font-lato font-normal max-w-xs">
-          {description}
+          {displayDescription}
         </p>
       </div>
     </div>

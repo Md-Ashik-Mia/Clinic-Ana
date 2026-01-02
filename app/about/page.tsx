@@ -7,33 +7,33 @@ export default function AboutPage() {
   return (
     <div className="pt-56 pb-10 px-4 container  mx-auto">
       <PageHeader
-        title="Dedicated to Your Recovery"
-        description="Our clinic combines experienced therapists, modern techniques, and compassionate care to support your full recovery journey."
+		titleKey="page.about.title1"
+		descriptionKey="page.about.desc1"
       />
     <div className="mt-12 space-y-20">
               <AboutSection
-        title="Physiotherapy Care"
-        highlight="Trusted"
+		titleKey="page.about.title2"
+              highlightKey="about.highlight.trusted"
         highlightColor="#00A991"
-        description="Our hospital is dedicated to delivering high-quality physiotherapy services in a safe and professional environment. With modern facilities and patient-focused care, we aim to support recovery, improve mobility, and enhance overall quality of life for every individual we serve."
+		descriptionKey="page.about.desc2"
         image="images/aboutus/image1.png"
         imageAlt="Physiotherapy care"
         reverse={false}
       />
       <AboutSection
-        title="Care for Every Patient"
-        highlight="Focused"
+		titleKey="page.about.title3"
+      highlightKey="about.highlight.focused"
         highlightColor="#00A991"
-        description="We provide personalized treatment plans, flexible appointment options, and continuous guidance throughout the recovery process. Our goal is to ensure each patient feels supported, informed, and confident at every stage of their therapy journey."
+		descriptionKey="page.about.desc3"
         image="images/aboutus/image2.png"
         imageAlt="Focused care for every patient"
         reverse={true}
       />
       <AboutSection
-        title="Physiotherapy Specialists"
-        highlight="Meet Our"
+		titleKey="page.about.title4"
+      highlightKey="about.highlight.meetOur"
         highlightColor="#00A991"
-        description="Our team consists of experienced and certified physiotherapists who specialize in various rehabilitation and pain management techniques. We are committed to delivering the highest standard of care, tailored to individual needs."
+		descriptionKey="page.about.desc4"
         image="images/aboutus/image3.png"
         imageAlt="Physiotherapy specialists team"
         reverse={false}

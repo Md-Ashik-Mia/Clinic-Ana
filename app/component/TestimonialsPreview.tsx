@@ -4,6 +4,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 import SectionTitle from '@/components/shared/SectionTitle';
+import { useLanguage } from '@/hooks/useLanguage';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { RiDoubleQuotesL } from 'react-icons/ri';
 
@@ -39,6 +40,7 @@ function initialsFromName(name: string) {
 }
 
 export default function TestimonialsPreview() {
+	const { t } = useLanguage();
 	const { data, isLoading, isError } = useReviews();
 	const all = (data ?? []) as Review[];
 	const withComment = all.filter((r) => (r?.comment ?? '').trim().length > 0);
@@ -91,12 +93,13 @@ export default function TestimonialsPreview() {
 			<div className="mx-auto max-w-6xl">
 				<div className="text-center">
 					<SectionTitle
-						greenText="Testimonial"
+						greenText={t('home.testimonialsPreview.title')}
 						blackText=""
 						description={
 							<>
-								Our patients share how personalized treatments and dedicated support helped them achieve a pain-free life.
-								Their experiences speak for our commitment.
+								{t('home.testimonialsPreview.descriptionLine1')}
+								{' '}
+								{t('home.testimonialsPreview.descriptionLine2')}
 							</>
 						}
 					/>
@@ -109,8 +112,8 @@ export default function TestimonialsPreview() {
 							<RiDoubleQuotesL className="inline-block" style={{ width: 144.14, height: 110.55 }} />
 						</div>
 						<div className="-mt-6">
-							<p className="text-grayColor text-2xl text-center">Hear From</p>
-							<h3 className="textHeading-color text-[52px] font-semibold leading-none text-center">Our Patients</h3>
+							<p className="text-grayColor text-2xl text-center">{t('home.testimonialsPreview.hearFrom')}</p>
+							<h3 className="textHeading-color text-[52px] font-semibold leading-none text-center">{t('home.testimonialsPreview.ourPatients')}</h3>
 						</div>
 
 						<div className="mt-6 flex items-center gap-4">
@@ -118,7 +121,7 @@ export default function TestimonialsPreview() {
 								type="button"
 								onClick={() => scrollBy('left')}
 								className="icon-interactive h-10 w-10 rounded-full flex items-center justify-center text-blackColor"
-								aria-label="Scroll testimonials left"
+								aria-label={t('home.testimonialsPreview.scrollLeftAria')}
 							>
 								<MdKeyboardArrowRight className="text-2xl rotate-180" />
 							</button>
@@ -132,7 +135,7 @@ export default function TestimonialsPreview() {
 								type="button"
 								onClick={() => scrollBy('right')}
 								className="icon-interactive h-10 w-10 rounded-full flex items-center justify-center text-blackColor"
-								aria-label="Scroll testimonials right"
+								aria-label={t('home.testimonialsPreview.scrollRightAria')}
 							>
 								<MdKeyboardArrowRight className="text-2xl" />
 							</button>
@@ -148,13 +151,13 @@ export default function TestimonialsPreview() {
 						<style>{`#testimonial-rail::-webkit-scrollbar{display:none;}`}</style>
 
 						{isLoading ? (
-							<div className="text-grayColor text-base">Loading reviews...</div>
+							<div className="text-grayColor text-base">{t('home.testimonialsPreview.loading')}</div>
 						) : isError ? (
-							<div className="text-grayColor text-base">Failed to load reviews.</div>
+							<div className="text-grayColor text-base">{t('home.testimonialsPreview.error')}</div>
 						) : (
 							items.map((r) => {
 								const comment = (r.comment ?? '').trim();
-								const name = (r.name ?? 'Patient').trim() || 'Patient';
+								const name = (r.name ?? t('home.testimonialsPreview.patientFallback')).trim() || t('home.testimonialsPreview.patientFallback');
 								const rating = Number(r.rating ?? 0);
 								const avatar = resolvePhotoUrl(r.photo);
 
@@ -197,7 +200,7 @@ export default function TestimonialsPreview() {
 
 											<div>
 												<div className="text-[26px] font-semibold text-blackColor leading-none">{name}</div>
-												<div className="text-sm text-grayColor leading-none mt-1">Patient</div>
+												<div className="text-sm text-grayColor leading-none mt-1">{t('home.testimonialsPreview.patientLabel')}</div>
 											</div>
 										</div>
 									</div>

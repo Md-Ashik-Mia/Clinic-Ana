@@ -1,6 +1,7 @@
 'use client';
 
 import { useClinicInfo } from '@/hooks/useClinicInfo';
+import { useLanguage } from '@/hooks/useLanguage';
 import { useWorkingHours } from '@/hooks/useWorkingHours';
 import type { ReactNode } from 'react';
 import { FiClock } from 'react-icons/fi';
@@ -69,6 +70,7 @@ function InfoCard({
 }
 
 export default function ContactInfoRow() {
+  const { t, language } = useLanguage();
   const { data: clinicInfo } = useClinicInfo();
   const { data: workingHours } = useWorkingHours();
 
@@ -78,12 +80,32 @@ export default function ContactInfoRow() {
 
   const hourItems = (workingHours ?? []) as WorkingHour[];
   const topHours = hourItems.slice(0, 2).map((item) => {
-    const label = normalizeDayLabel(item?.days, item?.closed_days);
+    const labelRaw = normalizeDayLabel(item?.days, item?.closed_days);
     const isClosed = Boolean(item?.closed_days) || !item?.start_time || !item?.end_time;
 
     const start = formatTimeForDisplay(item?.start_time, ':');
     const end = formatTimeForDisplay(item?.end_time, '.');
-    const timeText = isClosed ? '(Closed)' : `(${start}-${end})`;
+    const timeText = isClosed ? t('footer.closed') : `(${start}-${end})`;
+
+    const label = (() => {
+      if (language !== 'es') return labelRaw;
+      const map: Record<string, string> = {
+        Mon: 'Lun',
+        Tue: 'Mar',
+        Wed: 'Mié',
+        Thu: 'Jue',
+        Fri: 'Vie',
+        Sat: 'Sáb',
+        Sun: 'Dom',
+      };
+      const rangeMatch = labelRaw.match(/^([A-Za-z]{3})\s*-\s*([A-Za-z]{3})$/);
+      if (rangeMatch) {
+        const from = map[rangeMatch[1]] ?? rangeMatch[1];
+        const to = map[rangeMatch[2]] ?? rangeMatch[2];
+        return `${from}-${to}`;
+      }
+      return map[labelRaw] ?? labelRaw;
+    })();
 
     return { label, timeText, id: item.id };
   });
@@ -92,7 +114,7 @@ export default function ContactInfoRow() {
     <section className="px-4 ">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 py-8">
-          <InfoCard icon={<MdEmail className="h-6 w-6" />} title="Email Address">
+          <InfoCard icon={<MdEmail className="h-6 w-6" />} title={t('contact.info.emailTitle')}>
             {emails.length ? (
               emails.map((e) => <div key={e}>{e}</div>)
             ) : (
@@ -100,7 +122,7 @@ export default function ContactInfoRow() {
             )}
           </InfoCard>
 
-          <InfoCard icon={<MdPhone className="h-6 w-6" />} title="Phone Number">
+          <InfoCard icon={<MdPhone className="h-6 w-6" />} title={t('contact.info.phoneTitle')}>
             {phones.length ? (
               phones.map((p) => <div key={p}>{p}</div>)
             ) : (
@@ -108,11 +130,11 @@ export default function ContactInfoRow() {
             )}
           </InfoCard>
 
-          <InfoCard icon={<MdLocationOn className="h-6 w-6" />} title="Hospital Location">
+          <InfoCard icon={<MdLocationOn className="h-6 w-6" />} title={t('contact.info.locationTitle')}>
             <div>{location || '-'}</div>
           </InfoCard>
 
-          <InfoCard icon={<FiClock className="h-6 w-6" />} title="Working Day">
+          <InfoCard icon={<FiClock className="h-6 w-6" />} title={t('contact.info.workingDayTitle')}>
             {topHours.length ? (
               topHours.map((h) => (
                 <div key={String(h.id)}>

@@ -8,8 +8,8 @@ export default function ContactPage() {
     <div className="pt-56 pb-0">
       <div className="px-4">
         <PageHeader
-          title="Contact Our Physiotherapy Team"
-          description="Have questions about your recovery or our treatments? Send us a message and our team will respond promptly to guide you."
+			titleKey="page.contact.title"
+			descriptionKey="page.contact.description"
         />
       </div>
 

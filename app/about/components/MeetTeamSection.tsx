@@ -4,6 +4,7 @@
 
 import SectionTitle from '@/components/shared/SectionTitle';
 import { useDoctors } from '@/hooks/useDoctors';
+import { useLanguage } from '@/hooks/useLanguage';
 import axiosInstance from '@/lib/axiosInstance';
 import type { Doctor } from '@/types/doctor';
 import { useMemo, useState } from 'react';
@@ -60,6 +61,7 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
 
 export default function MeetTeamSection() {
 	const { data, isLoading, isError } = useDoctors();
+	const { t } = useLanguage();
 	const doctors = useMemo(() => ((data ?? []) as Doctor[]), [data]);
 	const [activeIndex, setActiveIndex] = useState(0);
 
@@ -80,7 +82,7 @@ export default function MeetTeamSection() {
 		return (
 			<section className="bg-background py-12 sm:py-16 lg:py-20 px-4">
 				<div className="mx-auto max-w-6xl text-center">
-					<div className="text-lg text-grayColor">Loading doctors...</div>
+					<div className="text-lg text-grayColor">{t('team.loading')}</div>
 				</div>
 			</section>
 		);
@@ -90,7 +92,7 @@ export default function MeetTeamSection() {
 		return (
 			<section className="bg-background py-12 sm:py-16 lg:py-20 px-4">
 				<div className="mx-auto max-w-6xl text-center">
-					<div className="text-lg text-grayColor">Failed to load doctors.</div>
+					<div className="text-lg text-grayColor">{t('team.error')}</div>
 				</div>
 			</section>
 		);
@@ -103,11 +105,9 @@ export default function MeetTeamSection() {
 			<div className="mx-auto container">
 				<div className="text-center">
 					<SectionTitle
-						greenText="Meet"
-						blackText=" the Team"
-						description={
-							<>Our experienced physiotherapists are dedicated to providing personalized care and effective treatment for every patient.</>
-						}
+						greenText={t('team.title.green')}
+						blackText={t('team.title.black')}
+						description={t('team.description')}
 						titleClassName="text-3xl sm:text-4xl lg:text-[42px] font-semibold"
 						descriptionClassName="mx-auto mt-3 max-w-3xl text-sm sm:text-base lg:text-lg text-grayColor"
 					/>
@@ -125,7 +125,7 @@ export default function MeetTeamSection() {
 								type="button"
 								onClick={goPrev}
 								className="h-10 w-10 rounded-full flex items-center justify-center text-blackColor"
-								aria-label="Previous doctor"
+								aria-label={t('team.prev')}
 							>
 								<MdKeyboardArrowRight className="text-2xl rotate-180" />
 							</button>
@@ -133,7 +133,7 @@ export default function MeetTeamSection() {
 								type="button"
 								onClick={goNext}
 								className="h-10 w-10 rounded-full flex items-center justify-center text-blackColor"
-								aria-label="Next doctor"
+								aria-label={t('team.next')}
 							>
 								<MdKeyboardArrowRight className="text-2xl" />
 							</button>

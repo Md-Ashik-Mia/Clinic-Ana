@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import SectionTitle from '@/components/shared/SectionTitle';
 import { useClinicInfo } from '@/hooks/useClinicInfo';
+import { useLanguage } from '@/hooks/useLanguage';
 import axiosInstance from '@/lib/axiosInstance';
 
 type ContactPayload = {
@@ -21,6 +22,7 @@ const INPUT_BG = '#D9F2EF';
 
 export default function CTASection() {
 	const { data: clinicInfo } = useClinicInfo();
+	const { t } = useLanguage();
 	const primaryPhone = clinicInfo?.phone_numbers?.[0] ?? '';
 	const primaryEmail = clinicInfo?.emails?.[0] ?? '';
 
@@ -53,12 +55,12 @@ export default function CTASection() {
 				message: form.message.trim(),
 			});
 			onCancel();
-			toast.success('Message sent successfully. We will contact you soon.', {
+			toast.success(t('home.cta.toastSuccess'), {
 				position: 'top-center',
 				autoClose: 3000,
 			});
 		} catch {
-			toast.error('Failed to send message. Please try again.', {
+			toast.error(t('home.cta.toastError'), {
 				position: 'top-center',
 				autoClose: 3500,
 			});
@@ -73,13 +75,13 @@ export default function CTASection() {
 			<div className="mx-auto max-w-6xl">
 				<div className="text-center">
 					<SectionTitle
-						greenText="Ready"
-						blackText=" to Feel Better?"
+						greenText={t('home.cta.titleGreen')}
+						blackText={t('home.cta.titleBlack')}
 						description={
 							<>
-								Let our specialists help you restore mobility, relieve pain, and get back to what you love.
+								{t('home.cta.descriptionLine1')}
 								<br />
-								Your healing journey starts today.
+								{t('home.cta.descriptionLine2')}
 							</>
 						}
 					/>
@@ -90,12 +92,12 @@ export default function CTASection() {
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-start">
 							{/* Left info */}
 							<div className="mb-2 h-full flex flex-col justify-center  ">
-								<p className="text-blackColor text-xl sm:text-base">Consult With Our</p>
+								<p className="text-blackColor text-xl sm:text-base">{t('home.cta.consultWithOur')}</p>
 								<h3 className="mb-3 text-[32px] sm:text-[38px] font-bold leading-none text-[#006557]">
-									Physiotherapists
+									{t('home.cta.physiotherapists')}
 								</h3>
 								<p className="mb-8 text-grayColor text-xs sm:text-sm max-w-[260px]">
-									Let our expert therapists understand your condition and design a personalized treatment plan.
+									{t('home.cta.leftDescription')}
 								</p>
 
 								<div className="mt-6 space-y-5 text-grayColor ">
@@ -116,7 +118,7 @@ export default function CTASection() {
 									<div className="space-y-5">
 										<div>
 											<label className="block text-blackColor text-[20px] leading-none">
-												Name<span className="text-red-500">*</span>
+												{t('home.cta.form.name')}<span className="text-red-500">*</span>
 											</label>
 											<input
 												required
@@ -130,7 +132,7 @@ export default function CTASection() {
 
 										<div>
 											<label className="block text-blackColor text-[20px] leading-none">
-												Email<span className="text-red-500">*</span>
+												{t('home.cta.form.email')}<span className="text-red-500">*</span>
 											</label>
 											<input
 												required
@@ -145,7 +147,7 @@ export default function CTASection() {
 
 										<div>
 											<label className="block text-blackColor text-[20px] leading-none">
-												Phone<span className="text-red-500">*</span>
+												{t('home.cta.form.phone')}<span className="text-red-500">*</span>
 											</label>
 											<input
 												required
@@ -160,7 +162,7 @@ export default function CTASection() {
 
 										<div>
 											<label className="block text-blackColor text-[20px] leading-none">
-												Message<span className="text-red-500">*</span>
+												{t('home.cta.form.message')}<span className="text-red-500">*</span>
 											</label>
 											<textarea
 												required
@@ -179,7 +181,7 @@ export default function CTASection() {
 											disabled={isSubmitting}
 											className="btn-interactive h-[42px] rounded-[20px] px-[31px] py-[6px] bg-[#00A991] text-white flex items-center justify-center gap-[10px] disabled:opacity-60"
 										>
-											<span className="text-base">Send</span>
+											<span className="text-base">{t('home.cta.form.send')}</span>
 											<RiSendPlaneFill className="text-base" />
 										</button>
 										<button
@@ -187,7 +189,7 @@ export default function CTASection() {
 											onClick={onCancel}
 											className="btn-interactive h-[42px] rounded-[20px] px-[31px] py-[6px] border border-black/70 text-blackColor"
 										>
-											<span className="text-base">Cancel</span>
+											<span className="text-base">{t('home.cta.form.cancel')}</span>
 										</button>
 									</div>
 								</div>

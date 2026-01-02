@@ -7,6 +7,7 @@ import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/f
 import { MdEmail, MdLocationOn, MdPhone } from 'react-icons/md';
 
 import { useClinicInfo } from '@/hooks/useClinicInfo';
+import { useLanguage } from '@/hooks/useLanguage';
 import { useWorkingHours } from '@/hooks/useWorkingHours';
 
 type WorkingHour = {
@@ -25,11 +26,16 @@ function formatTimeForDisplay(time: string | null | undefined, separator: ':' | 
 	return `${hours}${separator}${minutes}`;
 }
 
-function normalizeDayLabel(days: string | null | undefined, closedDays: string | null | undefined): string {
+function normalizeDayLabel(
+	days: string | null | undefined,
+	closedDays: string | null | undefined,
+	language: 'en' | 'es',
+	noDaysText: string
+): string {
 	const label = (days || closedDays || '').trim();
-	if (!label) return 'No specific days';
+	if (!label) return noDaysText;
 
-	const map: Record<string, string> = {
+	const mapEn: Record<string, string> = {
 		Monday: 'Mon',
 		Tuesday: 'Tue',
 		Wednesday: 'Wed',
@@ -38,6 +44,18 @@ function normalizeDayLabel(days: string | null | undefined, closedDays: string |
 		Saturday: 'Sat',
 		Sunday: 'Sun',
 	};
+
+	const mapEs: Record<string, string> = {
+		Monday: 'Lun',
+		Tuesday: 'Mar',
+		Wednesday: 'Mié',
+		Thursday: 'Jue',
+		Friday: 'Vie',
+		Saturday: 'Sáb',
+		Sunday: 'Dom',
+	};
+
+	const map = language === 'es' ? mapEs : mapEn;
 
 	const rangeMatch = label.match(/^([A-Za-z]+)\s*-\s*([A-Za-z]+)$/);
 	if (rangeMatch) {
@@ -54,6 +72,7 @@ function normalizeDayLabel(days: string | null | undefined, closedDays: string |
 export default function Footer() {
 	const { data: clinicInfo } = useClinicInfo();
 	const { data: workingHours } = useWorkingHours();
+	const { language, t } = useLanguage();
 
 	const primaryEmail = clinicInfo?.emails?.[0] ?? '';
 	const primaryPhone = clinicInfo?.phone_numbers?.[0] ?? '';
@@ -68,11 +87,11 @@ export default function Footer() {
 
 	const items = (workingHours ?? []) as WorkingHour[];
 	const timeItems = items.slice(0, 4).map((item) => {
-		const label = normalizeDayLabel(item?.days, item?.closed_days);
+		const label = normalizeDayLabel(item?.days, item?.closed_days, language, t('footer.noDays'));
 		const isClosed = Boolean(item?.closed_days) || !item?.start_time || !item?.end_time;
 		const start = formatTimeForDisplay(item?.start_time, ':');
 		const end = formatTimeForDisplay(item?.end_time, '.');
-		const timeText = isClosed ? '(Closed)' : `(${start}-${end})`;
+		const timeText = isClosed ? t('footer.closed') : `(${start}-${end})`;
 		return { id: item.id, label, timeText };
 	});
 
@@ -84,8 +103,7 @@ export default function Footer() {
 					<div>
 						<img src="/images/logo/logo.png" alt="Clinic logo" className="h-23 w-auto" />
 						<p className="mt-4 max-w-81.5 text-[16px] leading-tight text-[#003B33]">
-							We provide expert physiotherapy care to help you recover, stay active, and live a pain-free life. Your health and
-							well-being are our top priority.
+							{t('footer.about')}
 						</p>
 
 						<div className="mt-6 flex items-center gap-4 text-black">
@@ -123,14 +141,14 @@ export default function Footer() {
 
 					{/* Quick Links */}
 					<div>
-						<h4 className="text-[22px] font-medium leading-none text-blackColor">Quick Links</h4>
+						<h4 className="text-[22px] font-medium leading-none text-blackColor">{t('footer.quickLinks')}</h4>
 						<ul className="mt-5 space-y-3">
 							{[
-								{ label: 'Home', href: '/' },
-								{ label: 'About us', href: '/about' },
-								{ label: 'Services', href: '/services' },
-								{ label: 'Testimonials', href: '/testimonials' },
-								{ label: 'Contact', href: '/contact' },
+								{ label: t('nav.home'), href: '/' },
+								{ label: t('nav.about'), href: '/about' },
+								{ label: t('nav.services'), href: '/services' },
+								{ label: t('nav.testimonials'), href: '/testimonials' },
+								{ label: t('nav.contact'), href: '/contact' },
 							].map((t) => (
 								<li key={t.href}>
 									<Link href={t.href} className="text-[18px] text-grayColor underline underline-offset-4">
@@ -143,20 +161,20 @@ export default function Footer() {
 
 					{/* Service */}
 					<div>
-						<h4 className="text-[22px] font-medium leading-none text-blackColor">Service</h4>
+						<h4 className="text-[22px] font-medium leading-none text-blackColor">{t('footer.service')}</h4>
 						<ul className="mt-5 space-y-3 text-[18px] text-grayColor">
-							<li>Sports Injury Rehabilitation</li>
-							<li>Post-Surgical Therapy</li>
-							<li>Pain Management Therapy</li>
-							<li>Neurological Rehabilitation</li>
-							<li>Orthopedic Rehabilitation</li>
-							<li>Pediatric &amp; Geriatric Therapy</li>
+							<li>{t('footer.service.sports')}</li>
+							<li>{t('footer.service.postSurgical')}</li>
+							<li>{t('footer.service.pain')}</li>
+							<li>{t('footer.service.neuro')}</li>
+							<li>{t('footer.service.ortho')}</li>
+							<li>{t('footer.service.pediatric')}</li>
 						</ul>
 					</div>
 
 					{/* Time */}
 					<div>
-						<h4 className="text-[22px] font-medium leading-none text-blackColor">Time</h4>
+						<h4 className="text-[22px] font-medium leading-none text-blackColor">{t('footer.time')}</h4>
 						<ul className="mt-5 space-y-3 text-[18px] text-grayColor">
 							{timeItems.length ? (
 								timeItems.map((t) => (
@@ -173,7 +191,7 @@ export default function Footer() {
 				</div>
 
 				<div className="mt-12 text-blackColor text-sm">
-					© 2024 Clinic Name | Privacy Policy | Terms of Service
+					{t('footer.copyright')}
 				</div>
 			</div>
 		</footer>

@@ -1,38 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
+/* eslint-disable react/no-unescaped-entities */
+'use client';
+
 import SectionTitle from '@/components/shared/SectionTitle';
+import { useLanguage } from '@/hooks/useLanguage';
 
 type Feature = {
 	title: string;
 	description: string;
 	imageSrc?: string;
 };
-
-const FEATURES: Feature[] = [
-	{
-		title: 'Expert Therapists',
-		description:
-			'Highly trained and certified physiotherapists dedicated to accurate diagnosis and effective treatment.',
-		imageSrc: '/images/home/whychooseus/img1.png',
-	},
-	{
-		title: 'Personalized Care',
-		description:
-			'Every treatment plan is tailored to your condition, goals, and lifestyle for maximum recovery.',
-		imageSrc: '/images/home/whychooseus/img2.png',
-	},
-	{
-		title: 'Modern Techniques',
-		description:
-			'We use advanced physiotherapy methods and up-to-date clinical practices for better results.',
-		imageSrc: '/images/home/whychooseus/img3.png',
-	},
-	{
-		title: 'Friendly Environment',
-		description:
-			'Experience compassionate care in a calm and welcoming clinic that prioritizes your comfort.',
-		imageSrc: '/images/home/whychooseus/img4.png',
-	},
-];
 
 function FeatureImage({ src, alt }: { src?: string; alt: string }) {
 	if (!src) {
@@ -50,17 +27,43 @@ function FeatureImage({ src, alt }: { src?: string; alt: string }) {
 }
 
 export default function WhyChooseUs() {
+	const { t } = useLanguage();
+
+	const FEATURES: Feature[] = [
+		{
+			title: t('home.whyChooseUs.features.expertTherapists.title'),
+			description: t('home.whyChooseUs.features.expertTherapists.description'),
+			imageSrc: '/images/home/whychooseus/img1.png',
+		},
+		{
+			title: t('home.whyChooseUs.features.personalizedCare.title'),
+			description: t('home.whyChooseUs.features.personalizedCare.description'),
+			imageSrc: '/images/home/whychooseus/img2.png',
+		},
+		{
+			title: t('home.whyChooseUs.features.modernTechniques.title'),
+			description: t('home.whyChooseUs.features.modernTechniques.description'),
+			imageSrc: '/images/home/whychooseus/img3.png',
+		},
+		{
+			title: t('home.whyChooseUs.features.friendlyEnvironment.title'),
+			description: t('home.whyChooseUs.features.friendlyEnvironment.description'),
+			imageSrc: '/images/home/whychooseus/img4.png',
+		},
+	];
+
 	return (
 		<section className="bg-background py-12 sm:py-16 lg:py-20 px-4">
 			<div className="mx-auto max-w-6xl text-center">
 				<SectionTitle
 					className="mb-10"
-					greenText="Why "
-					blackText="Choose Us"
+					greenText={t('home.whyChooseUs.titleGreen')}
+					blackText={t('home.whyChooseUs.titleBlack')}
 					description={
 						<>
-							With a patient-centered approach and evidence-based therapy, we deliver care that truly makes a difference.
-							From accurate assessment to ongoing support, we guide you through every step of your healing journey.
+							{t('home.whyChooseUs.descriptionLine1')}
+							{' '}
+							{t('home.whyChooseUs.descriptionLine2')}
 						</>
 					}
 				/>

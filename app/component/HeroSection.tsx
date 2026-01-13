@@ -38,7 +38,7 @@ export default function HeroSection() {
         <div className="w-full lg:w-1/2">
           <div className="w-full relative flex flex-col justify-center">
             <h1 className="font-semibold text-3xl sm:text-4xl lg:text-5xl oceanGreen-color">
-              {t("home.hero.advanced")}
+              {/* {t("home.hero.advanced")} */}
             </h1>
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight secondary-color my-4">
               {t("home.hero.physiotherapy")}

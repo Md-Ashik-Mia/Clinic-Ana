@@ -1,12 +1,11 @@
 'use client';
 
-/* eslint-disable @next/next/no-img-element */
-
 import SectionTitle from '@/components/shared/SectionTitle';
 import { useDoctors } from '@/hooks/useDoctors';
 import { useLanguage } from '@/hooks/useLanguage';
 import axiosInstance from '@/lib/axiosInstance';
 import type { Doctor } from '@/types/doctor';
+import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 
@@ -29,11 +28,14 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
 		<div className="shrink-0 w-75.5">
 			<div className="w-75.5 h-75.5 overflow-hidden rounded-xl">
 				{photoUrl ? (
-					<img
+					<Image
 						src={photoUrl}
 						alt={fullName || 'Doctor'}
+						width={302}
+						height={302}
 						className="h-full w-full object-cover"
-						loading="lazy"
+						sizes="(min-width: 1024px) 302px, (min-width: 640px) 240px, 240px"
+						quality={95}
 					/>
 				) : (
 					<div className="h-full w-full bg-secondary" />
@@ -66,8 +68,6 @@ export default function MeetTeamSection() {
 	const [activeIndex, setActiveIndex] = useState(0);
 
 	const hasMany = doctors.length > 1;
-	const loopItems = useMemo(() => (hasMany ? [...doctors, ...doctors] : doctors), [doctors, hasMany]);
-	const durationSeconds = Math.max(18, doctors.length * 6);
 
 	const goPrev = () => {
 		if (!doctors.length) return;
@@ -101,8 +101,8 @@ export default function MeetTeamSection() {
 	if (!doctors.length) return null;
 
 	return (
-		<section className="bg-background py-12 sm:py-16 lg:py-20 px-4">
-			<div className="mx-auto container">
+		<section className="bg-background py-12 sm:py-16 lg:py-20">
+			<div className="page-container">
 				<div className="text-center">
 					<SectionTitle
 						greenText={t('team.title.green')}
@@ -142,21 +142,10 @@ export default function MeetTeamSection() {
 				</div>
 
 				{/* Desktop (lg+): auto right-to-left slide */}
-				<div className="mt-10 hidden lg:block overflow-hidden">
-					<div
-						className={
-							hasMany
-								? 'clinic-marquee-track flex w-max gap-8'
-								: 'flex flex-wrap justify-center gap-8'
-						}
-						style={
-							hasMany
-								? ({ animationDuration: `${durationSeconds}s` } as React.CSSProperties)
-								: undefined
-						}
-					>
-						{loopItems.map((doctor, idx) => (
-							<DoctorCard key={`${doctor.id}-${idx}`} doctor={doctor} />
+				<div className="mt-10 hidden lg:block">
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-20 justify-items-center">
+						{doctors.map((doctor) => (
+							<DoctorCard key={String(doctor.id)} doctor={doctor} />
 						))}
 					</div>
 				</div>

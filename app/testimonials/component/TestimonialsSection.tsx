@@ -165,7 +165,7 @@ export default function TestimonialsSection() {
 	};
 
 	return (
-		<section className="pb-16 px-4">
+		<section className="pb-16">
 			<ToastContainer />
 			<div className="mx-auto w-full max-w-265.25 rounded-xl bg-[#E6F6F4] px-4 sm:px-10 py-5">
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-25">

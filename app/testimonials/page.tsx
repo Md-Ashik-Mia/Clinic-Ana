@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function TestimonialsPage() {
   return (
-    <div className="pt-56 pb-10 px-4 container mx-auto">
+    <div className="pt-30  lg:pt-56  pb-10 page-container">
       <PageHeader
 		titleKey="page.testimonials.title"
 		descriptionKey="page.testimonials.description"

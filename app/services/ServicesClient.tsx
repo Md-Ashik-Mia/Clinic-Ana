@@ -10,7 +10,7 @@ export default function ServicesClient() {
   const { t } = useLanguage();
 
   return (
-    <div className="pt-56 pb-10 px-4">
+    <div className="pt-30  lg:pt-56 pb-10 page-container">
       <PageHeader titleKey="page.services.title" descriptionKey="page.services.description" />
 
       <div className="mt-12">

@@ -36,7 +36,7 @@ export default function AboutClient() {
   const { data: sections, isLoading, isError } = useAboutUsSections();
 
   return (
-    <div className="pt-56 pb-10 px-4 container  mx-auto">
+    <div className="pt-30  lg:pt-56  pb-10 page-container">
       <PageHeader titleKey="page.about.title1" descriptionKey="page.about.desc1" />
 
       <div className="mt-12 space-y-20">

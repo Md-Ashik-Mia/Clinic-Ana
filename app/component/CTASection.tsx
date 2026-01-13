@@ -70,9 +70,9 @@ export default function CTASection() {
 	};
 
 	return (
-		<section className="py-12 sm:py-16 lg:py-20 px-4">
+		<section className="py-12 sm:py-16 lg:py-20">
 			<ToastContainer />
-			<div className="mx-auto container">
+			<div className="page-container">
 				<div className="text-center">
 					<SectionTitle
 						greenText={t('home.cta.titleGreen')}

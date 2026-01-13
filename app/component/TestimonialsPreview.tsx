@@ -89,8 +89,8 @@ export default function TestimonialsPreview() {
 	};
 
 	return (
-		<section className="bg-background py-12 sm:py-16 lg:py-20 px-4">
-			<div className="mx-auto container">
+		<section className="bg-background py-12 sm:py-16 lg:py-20">
+			<div className="page-container">
 				<div className="text-center">
 					<SectionTitle
 						greenText={t('home.testimonialsPreview.title')}

@@ -1,14 +1,14 @@
 "use client";
 
 import {
-    createContext,
-    createElement,
-    useCallback,
-    useContext,
-    useEffect,
-    useMemo,
-    useState,
-    type ReactNode,
+	createContext,
+	createElement,
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+	type ReactNode,
 } from "react";
 
 export type Language = "en" | "es";
@@ -109,7 +109,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
 		"workingHours.closed": "Closed",
 
 		"home.hero.advanced": "Advanced",
-		"home.hero.physiotherapy": "Physiotherapy",
+		"home.hero.physiotherapy": "Physiotherapy and Osteopathy ",
 		"home.hero.tagline": "for Pain Relief & Mobility",
 		"home.hero.description": "Experience expert physiotherapy care in a warm, supportive environment focused on your long-term well-being.",
 		"home.hero.bookOnWhatsapp": "Book on WhatsApp",
@@ -275,7 +275,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
 		"workingHours.closed": "Cerrado",
 
 		"home.hero.advanced": "Avanzada",
-		"home.hero.physiotherapy": "Fisioterapia",
+		"home.hero.physiotherapy": "Fisioterapia y Osteopatía",
 		"home.hero.tagline": "para alivio del dolor y movilidad",
 		"home.hero.description": "Recibe atención de fisioterapia experta en un entorno cálido y de apoyo, enfocado en tu bienestar a largo plazo.",
 		"home.hero.bookOnWhatsapp": "Reservar por WhatsApp",
@@ -365,17 +365,23 @@ function isLanguage(value: unknown): value is Language {
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-	const [language, setLanguageState] = useState<Language>("en");
+	const [language, setLanguageState] = useState<Language>("es");
 
 	useEffect(() => {
+		let timeoutId: number | undefined;
 		try {
 			const stored = window.localStorage.getItem(STORAGE_KEY);
 			if (stored && isLanguage(stored)) {
-				setLanguageState(stored);
+				timeoutId = window.setTimeout(() => {
+					setLanguageState(stored);
+				}, 0);
 			}
 		} catch {
 			// ignore
 		}
+		return () => {
+			if (timeoutId != null) window.clearTimeout(timeoutId);
+		};
 	}, []);
 
 	useEffect(() => {

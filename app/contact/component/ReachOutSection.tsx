@@ -76,10 +76,10 @@ export default function ReachOutSection() {
   };
 
   return (
-    <section className="px-4 mb-20">
+    <section className="bg-[#E6F6F4] mb-20 py-10">
       <ToastContainer />
-      <div className="container mx-auto">
-        <div className="rounded-3xl bg-[#E6F6F4] px-6 py-8 lg:px-10 lg:py-10">
+      <div className="page-container">
+        <div className="rounded-3xl px-6 py-8 lg:px-10 lg:py-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
             {/* Left: Title + form */}
             <div>

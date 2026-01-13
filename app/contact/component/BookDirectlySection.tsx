@@ -10,8 +10,8 @@ export default function BookDirectlySection() {
   const href = getWhatsAppHref(clinicInfo?.whatsapp_numbers ?? null);
 
   return (
-    <section className="bg-[#B0E4DD] px-4 py-10">
-      <div className="container mx-auto">
+    <section className="bg-[#B0E4DD] py-10">
+      <div className="page-container">
         <div className="text-center">
           <h3 className="text-[42px] font-semibold leading-none text-[#007F6D]">{t('contact.bookDirect.title')}</h3>
           <p className="mx-auto mt-4 max-w-112.25 text-[18px] leading-tight text-[#525252]">

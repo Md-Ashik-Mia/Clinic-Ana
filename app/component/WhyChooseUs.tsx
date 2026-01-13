@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable react/no-unescaped-entities */
+
 'use client';
 
 import SectionTitle from '@/components/shared/SectionTitle';
@@ -53,8 +53,8 @@ export default function WhyChooseUs() {
 	];
 
 	return (
-		<section className="bg-background py-12 sm:py-16 lg:py-20 px-4">
-			<div className="mx-auto container text-center">
+		<section className="bg-background py-12 sm:py-16 lg:py-20">
+			<div className="page-container text-center">
 				<SectionTitle
 					className="mb-10"
 					greenText={t('home.whyChooseUs.titleGreen')}

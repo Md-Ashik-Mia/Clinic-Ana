@@ -103,7 +103,7 @@
 //         scrolled ? "bg-white/70 backdrop-blur-lg shadow-md" : "bg-transparent"
 //       }`}
 //     >
-//       <nav className="container mx-auto  h-20  flex items-center justify-between">
+//       <nav className="max-w-7xl mx-auto  h-20  flex items-center justify-between">
 //         {/* Logo */}
 //         <Link href="/" className="">
 //           <Image src="/images/logo/logo.png" alt="Anaespana Clinic Logo" width={140} height={20} className="mb-4" />
@@ -185,11 +185,11 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${
         scrolled ? "bg-white/70 backdrop-blur-lg shadow-md" : "bg-transparent"
       }`}
     >
-      <nav className="container mx-auto h-20 flex items-center justify-between px-6">
+      <nav className="page-container h-20 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" onClick={() => setMobileOpen(false)}>
           <Image
@@ -249,7 +249,7 @@ export default function Navbar() {
       {/* Mobile menu */}
       {mobileOpen && (
         <div className="md:hidden border-t border-slate-200 bg-white/90 backdrop-blur-lg shadow-md">
-          <div className="container mx-auto px-6 py-4">
+          <div className="page-container py-4">
             <ul className="flex flex-col gap-2">
               {navItems.map((item) => {
                 const isActive =

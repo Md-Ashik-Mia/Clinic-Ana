@@ -32,8 +32,8 @@ export default function SpecializedTreatments() {
 	}
 
 	return (
-		<section className="bg-background py-12 sm:py-16 lg:py-20 px-4">
-			<div className="mx-auto container text-center">
+		<section className="bg-background py-12 sm:py-16 lg:py-20">
+			<div className="page-container text-center">
 				<SectionTitle
 					className="mb-8 sm:mb-10 lg:mb-12"
 					greenText={t('home.specializedTreatments.titleGreen')}

@@ -111,8 +111,8 @@ export default function ContactInfoRow() {
   });
 
   return (
-    <section className="px-4 ">
-      <div className="container mx-auto">
+    <section>
+      <div className="page-container">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 py-8">
           <InfoCard icon={<MdEmail className="h-6 w-6" />} title={t('contact.info.emailTitle')}>
             {emails.length ? (

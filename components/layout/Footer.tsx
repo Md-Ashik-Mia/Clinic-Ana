@@ -96,8 +96,8 @@ export default function Footer() {
 	});
 
 	return (
-		<footer className="bg-[#E6F6F4] px-4 py-12">
-			<div className="mx-auto container">
+		<footer className="bg-[#E6F6F4] py-12">
+			<div className="page-container">
 				<div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr_1fr_0.8fr] gap-10 lg:gap-14">
 					{/* Left */}
 					<div>

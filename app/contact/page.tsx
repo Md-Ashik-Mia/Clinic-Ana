@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="pt-56 pb-0">
-      <div className="px-4">
+    <div className="pt-30  lg:pt-56  pb-0">
+      <div className="page-container">
         <PageHeader
 			titleKey="page.contact.title"
 			descriptionKey="page.contact.description"

@@ -31,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={lato.variable}>
+    <html lang="es" className={lato.variable}>
       <body
         className={`${lato.variable} antialiased`}
       >

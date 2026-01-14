@@ -3,43 +3,71 @@
 import SectionTitle from '@/components/shared/SectionTitle';
 import { useDoctors } from '@/hooks/useDoctors';
 import { useLanguage } from '@/hooks/useLanguage';
-import axiosInstance from '@/lib/axiosInstance';
 import type { Doctor } from '@/types/doctor';
-import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 
-function resolvePhotoUrl(photo: string | null | undefined) {
-	if (!photo) return '';
-	if (photo.startsWith('http://') || photo.startsWith('https://')) return photo;
+const FALLBACK_AVATAR =
+	'data:image/svg+xml;utf8,' +
+	encodeURIComponent(`
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800">
+  <rect width="100%" height="100%" fill="#EEF2F7"/>
+  <circle cx="400" cy="310" r="140" fill="#CBD5E1"/>
+  <rect x="180" y="480" width="440" height="220" rx="110" fill="#CBD5E1"/>
+</svg>`);
 
-	const base =
-		typeof axiosInstance?.defaults?.baseURL === 'string' ? axiosInstance.defaults.baseURL : '';
-	if (!base) return photo;
-	return `${base}${photo.startsWith('/') ? '' : '/'}${photo}`;
+function normalizeRemotePhotoUrl(raw?: string | null) {
+	const s = (raw ?? '').trim();
+	if (!s) return null;
+
+	try {
+		const u = new URL(s);
+		// API sometimes returns double slashes in pathname: //media/...
+
+		u.pathname = u.pathname.replace(/\/{2,}/g, '/');
+		return u.toString();
+	} catch {
+		// best-effort for non-absolute values
+		return s.replace(/\/{2,}/g, '/');
+	}
 }
 
-function DoctorCard({ doctor }: { doctor: Doctor }) {
+function buildHiDpiSrcSet(url: string) {
+	// If your backend/CDN supports dpr=, this will fetch sharper images on retina screens.
+	// If it doesn't, it will behave the same as today (worst case: extra cache entries).
+	const join = url.includes('?') ? '&' : '?';
+	const dpr2 = `${url}${join}dpr=2`;
+	const dpr3 = `${url}${join}dpr=3`;
+	return `${url} 1x, ${dpr2} 2x, ${dpr3} 3x`;
+}
+
+function DoctorCard({ doctor, fetchPriority }: { doctor: Doctor; fetchPriority?: 'high' | 'low' | 'auto' }) {
 	const fullName = `${doctor.first_name ?? ''} ${doctor.last_name ?? ''}`.trim();
 	const specialty = doctor.specialties?.[0]?.name;
-	const photoUrl = resolvePhotoUrl(doctor.photo);
+
+	const photoUrl = normalizeRemotePhotoUrl((doctor as any).photo);
 
 	return (
-		<div className="shrink-0 w-75.5">
-			<div className="w-75.5 h-75.5 overflow-hidden rounded-xl">
-				{photoUrl ? (
-					<Image
-						src={photoUrl}
-						alt={fullName || 'Doctor'}
-						width={302}
-						height={302}
-						className="h-full w-full object-cover"
-						sizes="(min-width: 1024px) 302px, (min-width: 640px) 240px, 240px"
-						quality={95}
-					/>
-				) : (
-					<div className="h-full w-full bg-secondary" />
-				)}
+		<div className="shrink-0 w-[302px]">
+			<div className="relative w-full overflow-hidden rounded-2xl bg-gray-100 aspect-square">
+				<img
+					src={photoUrl ?? FALLBACK_AVATAR}
+					srcSet={photoUrl ? buildHiDpiSrcSet(photoUrl) : undefined}
+					sizes="302px"
+					width={302}
+					height={302}
+					alt={`${(doctor as any).first_name ?? ''} ${(doctor as any).last_name ?? ''}`.trim() || 'Doctor photo'}
+					className="h-full w-full object-cover"
+					style={{ transform: 'translateZ(0)' }}
+					loading={fetchPriority === 'high' ? 'eager' : 'lazy'}
+					fetchPriority={fetchPriority}
+					decoding="async"
+					onError={(e) => {
+						// prevent infinite loop if fallback fails
+						const img = e.currentTarget;
+						if (img.src !== FALLBACK_AVATAR) img.src = FALLBACK_AVATAR;
+					}}
+				/>
 			</div>
 
 			<div className="mt-4 text-center">
@@ -116,7 +144,7 @@ export default function MeetTeamSection() {
 				{/* Mobile/Tablet: manual switch (no auto sliding) */}
 				<div className="mt-10 lg:hidden">
 					<div className="flex items-center justify-center">
-						<DoctorCard doctor={doctors[activeIndex]} />
+						<DoctorCard doctor={doctors[activeIndex]} fetchPriority="high" />
 					</div>
 
 					{hasMany ? (
@@ -144,8 +172,8 @@ export default function MeetTeamSection() {
 				{/* Desktop (lg+): auto right-to-left slide */}
 				<div className="mt-10 hidden lg:block">
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-20 justify-items-center">
-						{doctors.map((doctor) => (
-							<DoctorCard key={String(doctor.id)} doctor={doctor} />
+						{doctors.map((doctor, idx) => (
+							<DoctorCard key={String(doctor.id)} doctor={doctor} fetchPriority={idx < 2 ? 'high' : 'auto'} />
 						))}
 					</div>
 				</div>

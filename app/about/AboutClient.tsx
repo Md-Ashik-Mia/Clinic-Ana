@@ -74,7 +74,9 @@ export default function AboutClient() {
         )}
       </div>
 
-      <MeetTeamSection />
+      <div className="mt-20">
+        <MeetTeamSection />
+      </div>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import SectionTitle from '@/components/shared/SectionTitle';
 import { useDoctors } from '@/hooks/useDoctors';
 import { useLanguage } from '@/hooks/useLanguage';
 import type { Doctor } from '@/types/doctor';
+import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 
@@ -32,14 +33,7 @@ function normalizeRemotePhotoUrl(raw?: string | null) {
 	}
 }
 
-function buildHiDpiSrcSet(url: string) {
-	// If your backend/CDN supports dpr=, this will fetch sharper images on retina screens.
-	// If it doesn't, it will behave the same as today (worst case: extra cache entries).
-	const join = url.includes('?') ? '&' : '?';
-	const dpr2 = `${url}${join}dpr=2`;
-	const dpr3 = `${url}${join}dpr=3`;
-	return `${url} 1x, ${dpr2} 2x, ${dpr3} 3x`;
-}
+const CARD_SIZE = 302;
 
 function DoctorCard({ doctor, fetchPriority }: { doctor: Doctor; fetchPriority?: 'high' | 'low' | 'auto' }) {
 	const fullName = `${doctor.first_name ?? ''} ${doctor.last_name ?? ''}`.trim();
@@ -48,20 +42,20 @@ function DoctorCard({ doctor, fetchPriority }: { doctor: Doctor; fetchPriority?:
 	const photoUrl = normalizeRemotePhotoUrl((doctor as any).photo);
 
 	return (
-		<div className="shrink-0 w-[302px]">
-			<div className="relative w-full overflow-hidden rounded-2xl bg-gray-100 aspect-square">
-				<img
+		<div className="shrink-0" style={{ width: CARD_SIZE }}>
+			<div
+				className="relative overflow-hidden rounded-2xl bg-gray-100"
+				style={{ width: CARD_SIZE, height: CARD_SIZE }}
+			>
+				<Image
 					src={photoUrl ?? FALLBACK_AVATAR}
-					srcSet={photoUrl ? buildHiDpiSrcSet(photoUrl) : undefined}
-					sizes="302px"
-					width={302}
-					height={302}
+					width={CARD_SIZE}
+					height={CARD_SIZE}
 					alt={`${(doctor as any).first_name ?? ''} ${(doctor as any).last_name ?? ''}`.trim() || 'Doctor photo'}
-					className="h-full w-full object-cover"
-					style={{ transform: 'translateZ(0)' }}
-					loading={fetchPriority === 'high' ? 'eager' : 'lazy'}
-					fetchPriority={fetchPriority}
-					decoding="async"
+					className="block w-full h-full object-cover"
+					priority={fetchPriority === 'high'}
+					quality={100}
+					unoptimized={!photoUrl}
 					onError={(e) => {
 						// prevent infinite loop if fallback fails
 						const img = e.currentTarget;

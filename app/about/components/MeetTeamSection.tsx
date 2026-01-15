@@ -4,7 +4,7 @@ import SectionTitle from '@/components/shared/SectionTitle';
 import { useDoctors } from '@/hooks/useDoctors';
 import { useLanguage } from '@/hooks/useLanguage';
 import type { Doctor } from '@/types/doctor';
-import Image from 'next/image';
+import RemoteImage from '@/components/shared/RemoteImage';
 import { useMemo, useState } from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 
@@ -39,7 +39,7 @@ function DoctorCard({ doctor, fetchPriority }: { doctor: Doctor; fetchPriority?:
 	const fullName = `${doctor.first_name ?? ''} ${doctor.last_name ?? ''}`.trim();
 	const specialty = doctor.specialties?.[0]?.name;
 
-	const photoUrl = normalizeRemotePhotoUrl((doctor as any).photo);
+	const photoUrl = normalizeRemotePhotoUrl(doctor.photo);
 
 	return (
 		<div className="shrink-0" style={{ width: CARD_SIZE }}>
@@ -47,20 +47,16 @@ function DoctorCard({ doctor, fetchPriority }: { doctor: Doctor; fetchPriority?:
 				className="relative overflow-hidden rounded-2xl bg-gray-100"
 				style={{ width: CARD_SIZE, height: CARD_SIZE }}
 			>
-				<Image
+				<RemoteImage
 					src={photoUrl ?? FALLBACK_AVATAR}
+					fallbackSrc={FALLBACK_AVATAR}
 					width={CARD_SIZE}
 					height={CARD_SIZE}
-					alt={`${(doctor as any).first_name ?? ''} ${(doctor as any).last_name ?? ''}`.trim() || 'Doctor photo'}
+					sizes={`${CARD_SIZE}px`}
+					alt={`${doctor.first_name ?? ''} ${doctor.last_name ?? ''}`.trim() || 'Doctor photo'}
 					className="block w-full h-full object-cover"
 					priority={fetchPriority === 'high'}
 					quality={100}
-					unoptimized={!photoUrl}
-					onError={(e) => {
-						// prevent infinite loop if fallback fails
-						const img = e.currentTarget;
-						if (img.src !== FALLBACK_AVATAR) img.src = FALLBACK_AVATAR;
-					}}
 				/>
 			</div>
 
@@ -165,7 +161,7 @@ export default function MeetTeamSection() {
 
 				{/* Desktop (lg+): auto right-to-left slide */}
 				<div className="mt-10 hidden lg:block">
-					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-20 justify-items-center">
+					<div className="flex gap-20  justify-center items-center">
 						{doctors.map((doctor, idx) => (
 							<DoctorCard key={String(doctor.id)} doctor={doctor} fetchPriority={idx < 2 ? 'high' : 'auto'} />
 						))}

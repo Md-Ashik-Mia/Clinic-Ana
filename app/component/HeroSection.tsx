@@ -29,7 +29,7 @@ export default function HeroSection() {
       {/* Bottom blur fade (smooth transition into next section) */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-50 h-12 sm:h-20 lg:h-18  blur-md bg-[#F4FFFE]  "
+        className="pointer-events-none absolute inset-x-0 -bottom-6.5  md:bottom-0 z-50 h-12 sm:h-20 lg:h-18 blur-sm lg:blur-md bg-[#F4FFFE]  "
       />
 
       {/* Content Overlay */}

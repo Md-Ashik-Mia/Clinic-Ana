@@ -1,8 +1,8 @@
 "use client";
 
+import RemoteImage from "@/components/shared/RemoteImage";
 import { useLanguage } from "@/hooks/useLanguage";
 import type { Treatment } from "@/types/treatment";
-import RemoteImage from "@/components/shared/RemoteImage";
 
 interface TreatMentCardProps {
   treatment: Treatment;

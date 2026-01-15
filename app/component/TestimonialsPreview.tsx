@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-import SectionTitle from '@/components/shared/SectionTitle';
 import RemoteImage from '@/components/shared/RemoteImage';
+import SectionTitle from '@/components/shared/SectionTitle';
 import { useLanguage } from '@/hooks/useLanguage';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { RiDoubleQuotesL } from 'react-icons/ri';

@@ -1,7 +1,7 @@
 'use client';
 
-import SectionTitle from '@/components/shared/SectionTitle';
 import RemoteImage from '@/components/shared/RemoteImage';
+import SectionTitle from '@/components/shared/SectionTitle';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useTreatments } from '../../hooks/useTreatments';
 import type { Treatment } from '../../types/treatment';

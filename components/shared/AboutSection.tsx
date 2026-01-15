@@ -1,7 +1,7 @@
 "use client";
 
-import { useLanguage } from "@/hooks/useLanguage";
 import RemoteImage from "@/components/shared/RemoteImage";
+import { useLanguage } from "@/hooks/useLanguage";
 
 const FALLBACK_IMAGE =
   'data:image/svg+xml;utf8,' +

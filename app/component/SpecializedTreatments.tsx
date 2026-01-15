@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import SectionTitle from '@/components/shared/SectionTitle';
+import RemoteImage from '@/components/shared/RemoteImage';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useTreatments } from '../../hooks/useTreatments';
 import type { Treatment } from '../../types/treatment';
@@ -53,12 +53,14 @@ export default function SpecializedTreatments() {
 					{items.map((treatment) => (
 						// Prefer Spanish fields when ES is selected; fall back to English/default.
 						<div key={treatment.id} className="text-left max-w-sm mx-auto w-full">
-							<div className="overflow-hidden rounded-md bg-white">
-								<img
+							<div className="relative overflow-hidden rounded-md bg-white h-56 sm:h-64 lg:h-75.5">
+								<RemoteImage
 									src={treatment.photo ?? ''}
 									alt={treatment.name_eng ?? 'Treatment'}
-									className="h-56 sm:h-64 lg:h-75.5 w-full object-cover"
-									loading="lazy"
+									fill
+									sizes="(min-width: 1024px) 302px, (min-width: 640px) 256px, 224px"
+									className="object-cover"
+									quality={100}
 								/>
 							</div>
 

@@ -1,6 +1,16 @@
 "use client";
 
 import { useLanguage } from "@/hooks/useLanguage";
+import RemoteImage from "@/components/shared/RemoteImage";
+
+const FALLBACK_IMAGE =
+  'data:image/svg+xml;utf8,' +
+  encodeURIComponent(`
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800">
+  <rect width="100%" height="100%" fill="#EEF2F7"/>
+  <rect x="120" y="160" width="560" height="480" rx="24" fill="#CBD5E1"/>
+</svg>`);
+
 
 interface AboutSectionProps {
 	title?: string;
@@ -51,12 +61,15 @@ export default function AboutSection({
       </div>
       {/* Image */}
       <div className="flex-1 flex items-center justify-center w-full max-w-full">
-        <div className="w-full aspect-square max-w-[350px] sm:max-w-[450px] md:max-w-[600px] lg:max-w-[730px]">
-          <img
+        <div className="relative w-full aspect-square max-w-[350px] sm:max-w-[450px] md:max-w-[600px] lg:max-w-[730px]">
+          <RemoteImage
             src={image}
+            fallbackSrc={FALLBACK_IMAGE}
             alt={imageAlt}
-            className="rounded-[20px] w-full h-full object-cover"
-            loading="lazy"
+            fill
+            sizes="(min-width: 1024px) 730px, (min-width: 768px) 600px, (min-width: 640px) 450px, 350px"
+            className="rounded-[20px] object-cover"
+            quality={100}
           />
         </div>
       </div>

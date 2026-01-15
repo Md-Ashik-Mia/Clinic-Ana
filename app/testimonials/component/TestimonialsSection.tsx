@@ -5,6 +5,7 @@
 import { useMemo, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
+import RemoteImage from '@/components/shared/RemoteImage';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useReviews } from '@/hooks/useReviews';
 import axiosInstance from '@/lib/axiosInstance';
@@ -67,7 +68,15 @@ function ReviewItem({ review }: { review: Review }) {
 		<div className="w-full rounded-xl bg-[#D9F2EF] px-4 py-3 flex items-start gap-4">
 			<div className="h-12 w-12 rounded-full overflow-hidden bg-black/10 flex items-center justify-center shrink-0">
 				{avatar ? (
-					<img src={avatar} alt={name} className="h-full w-full object-cover" loading="lazy" />
+					<RemoteImage
+						src={avatar}
+						alt={name}
+						width={48}
+						height={48}
+						sizes="48px"
+						className="h-full w-full object-cover"
+						quality={100}
+					/>
 				) : (
 					<span className="text-grayColor font-semibold text-sm">{initialsFromName(name)}</span>
 				)}

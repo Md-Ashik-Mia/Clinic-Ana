@@ -1,9 +1,9 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
 
 import SectionTitle from '@/components/shared/SectionTitle';
+import RemoteImage from '@/components/shared/RemoteImage';
 import { useLanguage } from '@/hooks/useLanguage';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { RiDoubleQuotesL } from 'react-icons/ri';
@@ -171,7 +171,7 @@ export default function TestimonialsPreview() {
 												{/* subtle shadow/ring underlay */}
 												<div className="absolute -left-0.5 bottom-0 w-23.75 h-26.75">
 													{/* <div className="absolute left-0 bottom-0 w-6 h-12 bg-[#E6F6F4] shadow-sm ring-1 ring-black/5 rounded-sm" /> */}
-													<div className="absolute left-0 -bottom-14 w-23.75 h-26.75 bg-[#E6F6F4] shadow-sm  ring-black/5 [clip-path:polygon(0%_0%,100%_0%,0%_100%)] rounded-[2px]" />
+													<div className="absolute left-0 -bottom-14 w-23.75 h-26.75 bg-[#E6F6F4] shadow-sm  ring-black/5 [clip-path:polygon(0%_0%,100%_0%,0%_100%)] rounded-xs" />
 												</div>
 											</div>
 
@@ -187,11 +187,14 @@ export default function TestimonialsPreview() {
 										<div className="mt-6 ml-8 flex items-center gap-4">
 											<div className="h-16 w-16 rounded-full overflow-hidden bg-black/10 flex items-center justify-center ring-1 ring-black/5">
 												{avatar ? (
-													<img
+													<RemoteImage
 														src={avatar}
 														alt={name}
+														width={64}
+														height={64}
+														sizes="64px"
 														className="h-full w-full object-cover"
-														loading="lazy"
+														quality={100}
 													/>
 												) : (
 													<span className="text-grayColor font-semibold">{initialsFromName(name)}</span>

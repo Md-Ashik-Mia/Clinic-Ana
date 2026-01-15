@@ -29,7 +29,7 @@ export default function HeroSection() {
       {/* Bottom blur fade (smooth transition into next section) */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-4 z-10 h-20 sm:h-25 lg:h-22 bg-gradient-to-b from-transparent via-background/70 to-background backdrop-blur-[55px] opacity-5"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-50 h-12 sm:h-20 lg:h-18  blur-md bg-[#F4FFFE]  "
       />
 
       {/* Content Overlay */}
@@ -72,8 +72,8 @@ export default function HeroSection() {
           </div>
         </div>
 
-        <div className="w-full lg:w-1/2">
-          <div className="bg-[url('/images/hero/hero-section1.png')] bg-contain bg-no-repeat bg-center w-full h-[360px] sm:h-[480px] lg:h-[750px] relative" />
+        <div className="w-full lg:w-1/2 ">
+          <div className="bg-[url('/images/hero/hero-sectionana.png')] bg-contain bg-no-repeat bg-center w-full h-[360px] sm:h-[480px] lg:h-[750px] top-11 relative" />
         </div>
       </div>
     </section>

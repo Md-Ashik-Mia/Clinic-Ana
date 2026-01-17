@@ -20,9 +20,11 @@ export default function ServicesClient() {
           <div className="text-center text-red-500">{t('common.failedLoadTreatments')}</div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
-            {treatments?.map((treatment) => (
-              <TreatMentCard key={treatment.id} treatment={treatment} />
-            ))}
+            {treatments
+              ?.filter((treatment) => !treatment?.special)
+              .map((treatment) => (
+                <TreatMentCard key={treatment.id} treatment={treatment} />
+              ))}
           </div>
         )}
       </div>

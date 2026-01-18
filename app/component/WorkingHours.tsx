@@ -7,28 +7,41 @@ import { useWorkingHours } from '../../hooks/useWorkingHours';
 
 type WorkingHour = {
   id: number | string;
-  start_time?: string | null;
-  end_time?: string | null;
+  slots?: Array<{
+    id: number | string;
+    start_time?: string | null;
+    end_time?: string | null;
+    time_slots?: number | null;
+  }>;
   days?: string | null;
+  days_es?: string | null;
   closed_days?: string | null;
+  closed_days_es?: string | null;
 };
 
-function formatTimeForDisplay(time: string | null | undefined, separator: ':' | '.'): string {
+function formatTimeForDisplay(time: string | null | undefined): string {
   if (!time || typeof time !== 'string') return '';
   // Expected backend format: HH:MM:SS
   const [hhRaw, mmRaw] = time.split(':');
-  const hours = String(parseInt(hhRaw ?? '0', 10));
+  const hours24 = parseInt(hhRaw ?? '0', 10);
   const minutes = String(parseInt(mmRaw ?? '0', 10)).padStart(2, '0');
-  return `${hours}${separator}${minutes}`;
+  const suffix = hours24 >= 12 ? 'PM' : 'AM';
+  const hours12 = hours24 % 12 || 12;
+  return `${hours12}:${minutes} ${suffix}`;
 }
 
 function normalizeDayLabel(
   days: string | null | undefined,
+  daysEs: string | null | undefined,
   closedDays: string | null | undefined,
+  closedDaysEs: string | null | undefined,
   language: 'en' | 'es',
   emptyLabel: string,
 ): string {
-  const label = (days || closedDays || '').trim();
+  const rawLabel = language === 'es'
+    ? (daysEs || closedDaysEs || '')
+    : (days || closedDays || '');
+  const label = rawLabel.trim();
   if (!label) return emptyLabel;
 
   // Common abbreviations to match the UI (e.g. Monday-Thursday -> Mon-Thu)
@@ -100,23 +113,36 @@ export default function WorkingHours() {
           {items.map((item: WorkingHour) => {
             const label = normalizeDayLabel(
               item?.days,
+              item?.days_es,
               item?.closed_days,
+              item?.closed_days_es,
               language,
               t('workingHours.noSpecificDays'),
             );
-            const isClosed = Boolean(item?.closed_days) || !item?.start_time || !item?.end_time;
-
-            const start = formatTimeForDisplay(item?.start_time, ':');
-            const end = formatTimeForDisplay(item?.end_time, '.');
-            const timeText = isClosed ? `(${t('workingHours.closed')})` : `(${start}-${end})`;
+            const slots = (item?.slots ?? []).filter((slot) => slot?.start_time && slot?.end_time);
+            const isClosed = Boolean(item?.closed_days || item?.closed_days_es) || slots.length === 0;
 
             return (
               <div
                 key={item.id}
-                className="h-39.25 w-70 rounded-md bg-[#E6F6F4] px-9 py-3.5 flex flex-col justify-center gap-2.5"
+                className="min-h-39.25 h-auto w-78 rounded-md bg-[#E6F6F4]  py-3.5 flex flex-col justify-center gap-2.5"
               >
                 <div className="text-3xl  text-blackColor">{label}</div>
-                <div className="text-[32px] font-bold text-grayColor">{timeText}</div>
+                {isClosed ? (
+                  <div className="text-[32px] font-bold text-grayColor">({t('workingHours.closed')})</div>
+                ) : (
+                  <div className="flex flex-col gap-1">
+                    {slots.map((slot) => {
+                      const start = formatTimeForDisplay(slot?.start_time);
+                      const end = formatTimeForDisplay(slot?.end_time);
+                      return (
+                        <div key={slot.id} className="text-[28px] font-bold text-grayColor">
+                          ({start} - {end})
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             );
           })}

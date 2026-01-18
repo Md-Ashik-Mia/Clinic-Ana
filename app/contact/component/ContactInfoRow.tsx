@@ -9,25 +9,43 @@ import { MdEmail, MdLocationOn, MdPhone } from 'react-icons/md';
 
 type WorkingHour = {
   id: number | string;
-  start_time?: string | null;
-  end_time?: string | null;
+  slots?: Array<{
+    id: number | string;
+    start_time?: string | null;
+    end_time?: string | null;
+    time_slots?: number | null;
+  }>;
   days?: string | null;
+  days_es?: string | null;
   closed_days?: string | null;
+  closed_days_es?: string | null;
 };
 
-function formatTimeForDisplay(time: string | null | undefined, separator: ':' | '.'): string {
+function formatTimeForDisplay(time: string | null | undefined): string {
   if (!time || typeof time !== 'string') return '';
   const [hhRaw, mmRaw] = time.split(':');
-  const hours = String(parseInt(hhRaw ?? '0', 10));
+  const hours24 = parseInt(hhRaw ?? '0', 10);
   const minutes = String(parseInt(mmRaw ?? '0', 10)).padStart(2, '0');
-  return `${hours}${separator}${minutes}`;
+  const suffix = hours24 >= 12 ? 'PM' : 'AM';
+  const hours12 = hours24 % 12 || 12;
+  return `${hours12}:${minutes} ${suffix}`;
 }
 
-function normalizeDayLabel(days: string | null | undefined, closedDays: string | null | undefined): string {
-  const label = (days || closedDays || '').trim();
-  if (!label) return 'No specific days';
+function normalizeDayLabel(
+  days: string | null | undefined,
+  daysEs: string | null | undefined,
+  closedDays: string | null | undefined,
+  closedDaysEs: string | null | undefined,
+  language: 'en' | 'es',
+  emptyLabel: string,
+): string {
+  const rawLabel = language === 'es'
+    ? (daysEs || closedDaysEs || '')
+    : (days || closedDays || '');
+  const label = rawLabel.trim();
+  if (!label) return emptyLabel;
 
-  const map: Record<string, string> = {
+  const mapEn: Record<string, string> = {
     Monday: 'Mon',
     Tuesday: 'Tue',
     Wednesday: 'Wed',
@@ -36,6 +54,18 @@ function normalizeDayLabel(days: string | null | undefined, closedDays: string |
     Saturday: 'Sat',
     Sunday: 'Sun',
   };
+
+  const mapEs: Record<string, string> = {
+    Monday: 'Lun',
+    Tuesday: 'Mar',
+    Wednesday: 'Mié',
+    Thursday: 'Jue',
+    Friday: 'Vie',
+    Saturday: 'Sáb',
+    Sunday: 'Dom',
+  };
+
+  const map = language === 'es' ? mapEs : mapEn;
 
   const rangeMatch = label.match(/^([A-Za-z]+)\s*-\s*([A-Za-z]+)$/);
   if (rangeMatch) {
@@ -80,34 +110,17 @@ export default function ContactInfoRow() {
 
   const hourItems = (workingHours ?? []) as WorkingHour[];
   const topHours = hourItems.map((item) => {
-    const labelRaw = normalizeDayLabel(item?.days, item?.closed_days);
-    const isClosed = Boolean(item?.closed_days) || !item?.start_time || !item?.end_time;
-
-    const start = formatTimeForDisplay(item?.start_time, ':');
-    const end = formatTimeForDisplay(item?.end_time, ':');
-    const timeText = isClosed ? t('footer.closed') : `(${start}-${end})`;
-
-    const label = (() => {
-      if (language !== 'es') return labelRaw;
-      const map: Record<string, string> = {
-        Mon: 'Lun',
-        Tue: 'Mar',
-        Wed: 'Mié',
-        Thu: 'Jue',
-        Fri: 'Vie',
-        Sat: 'Sáb',
-        Sun: 'Dom',
-      };
-      const rangeMatch = labelRaw.match(/^([A-Za-z]{3})\s*-\s*([A-Za-z]{3})$/);
-      if (rangeMatch) {
-        const from = map[rangeMatch[1]] ?? rangeMatch[1];
-        const to = map[rangeMatch[2]] ?? rangeMatch[2];
-        return `${from}-${to}`;
-      }
-      return map[labelRaw] ?? labelRaw;
-    })();
-
-    return { label, timeText, id: item.id };
+    const label = normalizeDayLabel(
+      item?.days,
+      item?.days_es,
+      item?.closed_days,
+      item?.closed_days_es,
+      language,
+      t('workingHours.noSpecificDays'),
+    );
+    const slots = (item?.slots ?? []).filter((slot) => slot?.start_time && slot?.end_time);
+    const isClosed = Boolean(item?.closed_days || item?.closed_days_es) || slots.length === 0;
+    return { label, slots, isClosed, id: item.id };
   });
 
   return (
@@ -138,7 +151,20 @@ export default function ContactInfoRow() {
             {topHours.length ? (
               topHours.map((h) => (
                 <div key={String(h.id)}>
-                  {h.label} {h.timeText}
+                  <div>{h.label}</div>
+                  {h.isClosed ? (
+                    <div>{t('workingHours.closed')}</div>
+                  ) : (
+                    h.slots.map((slot) => {
+                      const start = formatTimeForDisplay(slot?.start_time);
+                      const end = formatTimeForDisplay(slot?.end_time);
+                      return (
+                        <div key={String(slot.id)}>
+                          ({start} - {end})
+                        </div>
+                      );
+                    })
+                  )}
                 </div>
               ))
             ) : (

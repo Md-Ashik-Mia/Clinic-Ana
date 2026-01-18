@@ -12,27 +12,40 @@ import { useWorkingHours } from '@/hooks/useWorkingHours';
 
 type WorkingHour = {
 	id: number | string;
-	start_time?: string | null;
-	end_time?: string | null;
+	slots?: Array<{
+		id: number | string;
+		start_time?: string | null;
+		end_time?: string | null;
+		time_slots?: number | null;
+	}>;
 	days?: string | null;
+	days_es?: string | null;
 	closed_days?: string | null;
+	closed_days_es?: string | null;
 };
 
-function formatTimeForDisplay(time: string | null | undefined, separator: ':' | '.'): string {
+function formatTimeForDisplay(time: string | null | undefined): string {
 	if (!time || typeof time !== 'string') return '';
 	const [hhRaw, mmRaw] = time.split(':');
-	const hours = String(parseInt(hhRaw ?? '0', 10));
+	const hours24 = parseInt(hhRaw ?? '0', 10);
 	const minutes = String(parseInt(mmRaw ?? '0', 10)).padStart(2, '0');
-	return `${hours}${separator}${minutes}`;
+	const suffix = hours24 >= 12 ? 'PM' : 'AM';
+	const hours12 = hours24 % 12 || 12;
+	return `${hours12}:${minutes} ${suffix}`;
 }
 
 function normalizeDayLabel(
 	days: string | null | undefined,
+	daysEs: string | null | undefined,
 	closedDays: string | null | undefined,
+	closedDaysEs: string | null | undefined,
 	language: 'en' | 'es',
 	noDaysText: string
 ): string {
-	const label = (days || closedDays || '').trim();
+	const rawLabel = language === 'es'
+		? (daysEs || closedDaysEs || '')
+		: (days || closedDays || '');
+	const label = rawLabel.trim();
 	if (!label) return noDaysText;
 
 	const mapEn: Record<string, string> = {
@@ -87,12 +100,17 @@ export default function Footer() {
 
 	const items = (workingHours ?? []) as WorkingHour[];
 	const timeItems = items.slice(0, 4).map((item) => {
-		const label = normalizeDayLabel(item?.days, item?.closed_days, language, t('footer.noDays'));
-		const isClosed = Boolean(item?.closed_days) || !item?.start_time || !item?.end_time;
-		const start = formatTimeForDisplay(item?.start_time, ':');
-		const end = formatTimeForDisplay(item?.end_time, '.');
-		const timeText = isClosed ? t('footer.closed') : `(${start}-${end})`;
-		return { id: item.id, label, timeText };
+		const label = normalizeDayLabel(
+			item?.days,
+			item?.days_es,
+			item?.closed_days,
+			item?.closed_days_es,
+			language,
+			t('footer.noDays')
+		);
+		const slots = (item?.slots ?? []).filter((slot) => slot?.start_time && slot?.end_time);
+		const isClosed = Boolean(item?.closed_days || item?.closed_days_es) || slots.length === 0;
+		return { id: item.id, label, slots, isClosed };
 	});
 
 	return (
@@ -177,10 +195,24 @@ export default function Footer() {
 						<h4 className="text-[22px] font-medium leading-none text-blackColor">{t('footer.time')}</h4>
 						<ul className="mt-5 space-y-3 text-[18px] text-grayColor">
 							{timeItems.length ? (
-								timeItems.map((t) => (
-									<li key={String(t.id)}>
-										<div>{t.label}</div>
-										<div className="mt-1 text-sm text-grayColor">{t.timeText}</div>
+								timeItems.map((item) => (
+									<li key={String(item.id)}>
+										<div>{item.label}</div>
+										{item.isClosed ? (
+											<div className="mt-1 text-sm text-grayColor">{t('footer.closed')}</div>
+										) : (
+											<div className="mt-1 space-y-1 text-sm text-grayColor">
+												{item.slots.map((slot) => {
+													const start = formatTimeForDisplay(slot?.start_time);
+													const end = formatTimeForDisplay(slot?.end_time);
+													return (
+														<div key={String(slot.id)}>
+															({start} - {end})
+														</div>
+													);
+												})}
+											</div>
+										)}
 									</li>
 								))
 							) : (

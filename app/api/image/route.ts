@@ -12,9 +12,26 @@ export async function GET(request: NextRequest) {
     return new NextResponse("Missing url", { status: 400 });
   }
 
+  const normalizeUrlParam = (value: string) => {
+    let current = value.trim();
+    for (let i = 0; i < 2; i += 1) {
+      if (!/%[0-9A-Fa-f]{2}/.test(current)) break;
+      try {
+        const decoded = decodeURIComponent(current);
+        if (decoded === current) break;
+        current = decoded;
+      } catch {
+        break;
+      }
+    }
+    return current;
+  };
+
+  const normalizedRaw = normalizeUrlParam(raw);
+
   let target: URL;
   try {
-    target = new URL(raw);
+    target = new URL(normalizedRaw);
   } catch {
     return new NextResponse("Invalid url", { status: 400 });
   }
@@ -33,7 +50,9 @@ export async function GET(request: NextRequest) {
     });
 
     if (!upstream.ok || !upstream.body) {
-      return new NextResponse("Upstream error", { status: upstream.status || 502 });
+      return new NextResponse("Upstream error", {
+        status: upstream.status || 502,
+      });
     }
 
     const headers = new Headers(upstream.headers);

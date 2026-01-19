@@ -30,13 +30,13 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
 		"lang.es": "ES",
 
 		"page.contact.title": "Contact Our Physiotherapy Team",
-		"page.contact.description": "Have questions about your recovery or our treatments? Send us a message and our team will respond promptly to guide you.",
+		"page.contact.description": "Real stories of patients who have regained mobility, well-being, and confidence with the support of our team.",
 		"page.services.title": "Comprehensive care in physiotherapy and osteopathy.",
 		"page.services.description": "From injury rehabilitation to pain management, these are the procedures and techniques most commonly used in our practice.",
 		"page.testimonials.title": "What Our Patient Say",
 		"page.testimonials.description": "Hear real stories from patients who regained strength, mobility, and confidence through our care.",
 		"page.about.title1": "Dedicated to Your Recovery",
-		"page.about.desc1": "Our clinic combines experienced therapists, modern techniques, and compassionate care to support your full recovery journey.",
+		"page.about.desc1": "Our clinic is staffed by highly trained and experienced therapists focused on identifying the root cause of your symptoms and guiding you toward an effective and lasting recovery.",
 		"page.about.title2": "Physiotherapy Care",
 		"page.about.desc2": "Our hospital is dedicated to delivering high-quality physiotherapy services in a safe and professional environment. With modern facilities and patient-focused care, we aim to support recovery, improve mobility, and enhance overall quality of life for every individual we serve.",
 		"page.about.title3": "Care for Every Patient",
@@ -111,7 +111,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
 		"home.hero.advanced": "Advanced",
 		"home.hero.physiotherapy": "Physiotherapy and Osteopathy ",
 		"home.hero.tagline": "for Pain Relief & Mobility",
-		"home.hero.description": "Experience expert physiotherapy care in a warm, supportive environment focused on your long-term well-being.",
+		"home.hero.description": "Experienced professionals who support you in a friendly and supportive environment, focused on improving your quality of life.",
 		"home.hero.bookOnWhatsapp": "Book on WhatsApp",
 		"home.hero.viewTreatments": "View Treatments",
 
@@ -165,7 +165,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
 
 			"contact.info.emailTitle": "Email Address",
 			"contact.info.phoneTitle": "Phone Number",
-			"contact.info.locationTitle": "Hospital Location",
+			"contact.info.locationTitle": "Clinic location",
 			"contact.info.workingDayTitle": "Working Day",
 
 			"testimonials.recentFeedbacks": "Recent Feedbacks",
@@ -196,13 +196,13 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
 		"lang.es": "ES",
 
 		"page.contact.title": "Contacta con nuestro equipo de fisioterapia",
-		"page.contact.description": "¿Tienes preguntas sobre tu recuperación o nuestros tratamientos? Envíanos un mensaje y te responderemos pronto para orientarte.",
+		"page.contact.description": "Historias reales de pacientes que han recuperado movilidad, bienestar y confianza con la ayuda de nuestro equipo.",
 		"page.services.title": "Atención integral en fisioterapia y osteopatía.",
 		"page.services.description": "Desde la rehabilitación de lesiones hasta el manejo del dolor, estos son los procedimientos y técnicas más utilizados en nuestra consulta.",
 		"page.testimonials.title": "Lo que dicen nuestros pacientes",
 		"page.testimonials.description": "Historias reales de pacientes que recuperaron fuerza, movilidad y confianza con nuestro cuidado.",
 		"page.about.title1": "Dedicados a tu recuperación",
-		"page.about.desc1": "Nuestra clínica combina terapeutas con experiencia, técnicas modernas y una atención compasiva para acompañarte.",
+		"page.about.desc1": "Nuestra clínica cuenta con terapeutas altamente formados y con amplia experiencia, enfocados en identificar el origen del síntoma y acompañarte hacia una recuperación eficaz y duradera.",
 		"page.about.title2": "Atención de fisioterapia",
 		"page.about.desc2": "Nuestro centro ofrece servicios de fisioterapia de alta calidad en un entorno seguro y profesional. Con instalaciones modernas y atención centrada en el paciente, buscamos apoyar la recuperación, mejorar la movilidad y la calidad de vida.",
 		"page.about.title3": "Cuidado para cada paciente",
@@ -276,8 +276,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
 
 		"home.hero.advanced": "Avanzada",
 		"home.hero.physiotherapy": "Fisioterapia y Osteopatía",
-		"home.hero.tagline": "para alivio del dolor y movilidad",
-		"home.hero.description": "Recibe atención de fisioterapia experta en un entorno cálido y de apoyo, enfocado en tu bienestar a largo plazo.",
+		"home.hero.tagline": "alivio del dolor y mejora de tu movilidad.",
+		"home.hero.description": "Profesionales con experiencia que te acompañan en un entorno cercano y de apoyo, enfocado en mejorar tu calidad de vida.",
 		"home.hero.bookOnWhatsapp": "Reservar por WhatsApp",
 		"home.hero.viewTreatments": "Ver tratamientos",
 
@@ -331,7 +331,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
 
 			"contact.info.emailTitle": "Correo electrónico",
 			"contact.info.phoneTitle": "Número de teléfono",
-			"contact.info.locationTitle": "Ubicación del hospital",
+			"contact.info.locationTitle": "Ubicación de la clínica",
 			"contact.info.workingDayTitle": "Día laborable",
 
 			"testimonials.recentFeedbacks": "Comentarios recientes",

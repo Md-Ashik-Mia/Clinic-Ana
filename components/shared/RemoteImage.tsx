@@ -1,11 +1,15 @@
 "use client";
 
-import Image, { type ImageProps } from "next/image";
+import type { ImgHTMLAttributes } from "react";
 
-type RemoteImageProps = Omit<ImageProps, "src" | "alt"> & {
+type RemoteImageProps = Omit<ImgHTMLAttributes<HTMLImageElement>, "src" | "alt"> & {
   src?: string | null;
   alt: string;
   fallbackSrc?: string;
+  fill?: boolean;
+  sizes?: string;
+  quality?: number;
+  unoptimized?: boolean;
 };
 
 function normalizeImageUrl(raw?: string | null) {
@@ -45,20 +49,30 @@ function normalizeImageUrl(raw?: string | null) {
   }
 }
 
-export default function RemoteImage({ src, fallbackSrc, unoptimized, alt, ...props }: RemoteImageProps) {
+export default function RemoteImage({
+  src,
+  fallbackSrc,
+  alt,
+  fill,
+  sizes,
+  quality,
+  unoptimized,
+  style,
+  ...props
+}: RemoteImageProps) {
   const normalized = normalizeImageUrl(src) || fallbackSrc || "";
   if (!normalized) return null;
 
-  const isData = normalized.startsWith("data:");
-  const isLocal = normalized.startsWith("/");
-  const imageSrc = isData || isLocal ? normalized : `/api/image?url=${encodeURIComponent(normalized)}`;
+  const mergedStyle = fill
+    ? { ...style, position: "absolute", inset: 0, width: "100%", height: "100%" }
+    : style;
 
   return (
-    <Image
+    <img
       {...props}
-      src={imageSrc}
+      src={normalized}
       alt={alt}
-      unoptimized={isData || unoptimized}
+      style={mergedStyle}
     />
   );
 }

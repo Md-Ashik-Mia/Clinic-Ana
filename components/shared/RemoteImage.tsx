@@ -56,5 +56,5 @@ export default function RemoteImage({
 }: RemoteImageProps) {
   const normalized = normalizeImageUrl(src) || fallbackSrc || "";
   if (!normalized) return null;
-  return <Image {...props} src={normalized} alt={alt} />;
+  return <img {...props} src={normalized} alt={alt} />;
 }

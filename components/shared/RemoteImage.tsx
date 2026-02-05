@@ -12,8 +12,10 @@ function normalizeImageUrl(raw?: string | null) {
   const s = (raw ?? "").trim();
   if (!s) return null;
 
+  // Data URLs are returned as-is
   if (s.startsWith("data:")) return s;
 
+  // Protocol-relative URLs
   if (s.startsWith("//")) {
     if (typeof window !== "undefined") {
       return `${window.location.protocol}${s}`;
@@ -21,30 +23,35 @@ function normalizeImageUrl(raw?: string | null) {
     return `https:${s}`;
   }
 
-  if (s.startsWith("/")) {
-    const base = process.env.NEXT_PUBLIC_API_URL;
-    if (base) {
-      try {
-        const joined = new URL(
-          s.replace(/^\/+/, ""),
-          base.endsWith("/") ? base : `${base}/`,
-        );
-        joined.pathname = joined.pathname.replace(/\/{2,}/g, "/");
-        return joined.toString();
-      } catch {
-        return s.replace(/\/{2,}/g, "/");
-      }
+  // Absolute URLs are returned as-is (but normalized for double slashes in path)
+  if (s.startsWith("http://") || s.startsWith("https://")) {
+    try {
+      const u = new URL(s);
+      u.pathname = u.pathname.replace(/\/{2,}/g, "/");
+      return u.toString();
+    } catch {
+      return s.replace(/\/{2,}/g, "/");
     }
-
-    return s.replace(/\/{2,}/g, "/");
   }
 
+  // Relative paths (starting with / or not)
+  const base = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+
   try {
-    const u = new URL(s);
-    u.pathname = u.pathname.replace(/\/{2,}/g, "/");
-    return u.toString();
+    // We want to use the origin of the API URL for media files,
+    // especially if NEXT_PUBLIC_API_URL includes a path like /api/v1/
+    const baseUrl = new URL(base);
+    const origin = baseUrl.origin;
+
+    // Join origin with the path, ensuring a single leading slash for the path
+    const path = s.startsWith("/") ? s : `/${s}`;
+    const normalizedPath = path.replace(/\/{2,}/g, "/");
+
+    return `${origin}${normalizedPath}`;
   } catch {
-    return s.replace(/\/{2,}/g, "/");
+    // Fallback if base is not a valid URL
+    const path = s.startsWith("/") ? s : `/${s}`;
+    return `${base}${path}`.replace(/(https?:\/\/)|(\/)+/g, "$1$2");
   }
 }
 
@@ -55,6 +62,23 @@ export default function RemoteImage({
   ...props
 }: RemoteImageProps) {
   const normalized = normalizeImageUrl(src) || fallbackSrc || "";
+
   if (!normalized) return null;
-  return <img {...props} src={normalized} alt={alt} />;
+
+  // If it's a local public image, use standard Image
+  if (normalized.startsWith("/") && !normalized.startsWith("//")) {
+    return <Image {...props} src={normalized} alt={alt} />;
+  }
+
+  // Use next/image for remote images as well (configured in next.config.ts)
+  return (
+    <Image
+      {...props}
+      src={normalized}
+      alt={alt}
+      // If the user hasn't configured remotePatterns correctly,
+      // they might need unoptimized={true}.
+      // But we'll trust their next.config.ts for now.
+    />
+  );
 }

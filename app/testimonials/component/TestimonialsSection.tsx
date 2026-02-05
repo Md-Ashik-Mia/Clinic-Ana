@@ -11,14 +11,6 @@ import { useReviews } from '@/hooks/useReviews';
 import axiosInstance from '@/lib/axiosInstance';
 import type { Review } from '@/types/review';
 
-function resolvePhotoUrl(photo: string | null | undefined) {
-	if (!photo) return '';
-	if (photo.startsWith('http://') || photo.startsWith('https://')) return photo;
-
-	const base = typeof axiosInstance?.defaults?.baseURL === 'string' ? axiosInstance.defaults.baseURL : '';
-	if (!base) return photo;
-	return `${base}${photo.startsWith('/') ? '' : '/'}${photo}`;
-}
 
 function initialsFromName(name: string) {
 	const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -62,7 +54,7 @@ function ReviewItem({ review }: { review: Review }) {
 	const name = (review.name ?? 'Patient').trim() || 'Patient';
 	const comment = (review.comment ?? '').trim();
 	const rating = Number(review.rating ?? 0);
-	const avatar = resolvePhotoUrl(review.photo);
+	const avatar = review.photo;
 
 	return (
 		<div className="w-full rounded-xl bg-[#D9F2EF] px-4 py-3 flex items-start gap-4">

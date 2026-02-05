@@ -18,15 +18,10 @@ export default function TreatMentCard({ treatment }: TreatMentCardProps) {
     (isEs ? (name_es || title_es) : null) || name_eng || title || name_es || title_es || "";
   const displayDescription = (isEs ? description_es : null) || description || description_es || "";
 
-  // Fallback image if photo is missing
-  const imageUrl =
-    photo && typeof photo === "string" && photo.length > 0
-      ? photo.startsWith("http")
-        ? photo
-        : `${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000"}${
-            photo.startsWith("/") ? "" : "/"
-          }${photo}`
-      : "/images/hero/hero-1.jpg";
+  // Pass the photo directly to RemoteImage, which handles base URL normalization
+  const imageUrl = photo && typeof photo === "string" && photo.length > 0
+    ? photo
+    : "/images/hero/hero-1.jpg";
 
   return (
     <div

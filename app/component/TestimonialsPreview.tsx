@@ -9,7 +9,6 @@ import { MdKeyboardArrowRight } from 'react-icons/md';
 import { RiDoubleQuotesL } from 'react-icons/ri';
 
 import { useReviews } from '../../hooks/useReviews';
-import axiosInstance from '../../lib/axiosInstance';
 import type { Review } from '../../types/review';
 
 function Stars({ count }: { count: number }) {
@@ -23,14 +22,6 @@ function Stars({ count }: { count: number }) {
 	);
 }
 
-function resolvePhotoUrl(photo: string | null | undefined) {
-	if (!photo) return '';
-	if (photo.startsWith('http://') || photo.startsWith('https://')) return photo;
-
-	const base = typeof axiosInstance?.defaults?.baseURL === 'string' ? axiosInstance.defaults.baseURL : '';
-	if (!base) return photo;
-	return `${base}${photo.startsWith('/') ? '' : '/'}${photo}`;
-}
 
 function initialsFromName(name: string) {
 	const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -159,7 +150,7 @@ export default function TestimonialsPreview() {
 								const comment = (r.comment ?? '').trim();
 								const name = (r.name ?? t('home.testimonialsPreview.patientFallback')).trim() || t('home.testimonialsPreview.patientFallback');
 								const rating = Number(r.rating ?? 0);
-								const avatar = resolvePhotoUrl(r.photo);
+								const avatar = r.photo;
 
 								return (
 									<div key={String(r.id)} className="shrink-0 w-75.5">

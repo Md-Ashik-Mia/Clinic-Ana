@@ -17,19 +17,6 @@ const FALLBACK_AVATAR =
   <rect x="180" y="480" width="440" height="220" rx="110" fill="#CBD5E1"/>
 </svg>`);
 
-function normalizeRemotePhotoUrl(raw?: string | null) {
-  const s = (raw ?? "").trim();
-  try {
-    const u = new URL(s);
-    // API sometimes returns double slashes in pathname: //media/...
-
-    u.pathname = u.pathname.replace(/\/{2,}/g, "/");
-    return u.toString();
-  } catch {
-    // best-effort for non-absolute values
-    return s.replace(/\/{2,}/g, "/");
-  }
-}
 
 const CARD_SIZE = 302;
 
@@ -55,7 +42,7 @@ function DoctorCard({
     )
     .filter(Boolean);
 
-  const photoUrl = normalizeRemotePhotoUrl(doctor.photo);
+  const photoUrl = doctor.photo;
 
   return (
     <div className="shrink-0" style={{ width: CARD_SIZE }}>

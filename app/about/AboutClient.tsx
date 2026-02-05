@@ -9,10 +9,10 @@ import MeetTeamSection from './components/MeetTeamSection';
 function AboutSectionSkeleton({ reverse }: { reverse?: boolean }) {
   return (
     <section
-      className={`w-full animate-pulse flex flex-col-reverse ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center justify-between gap-8 md:gap-12 lg:gap-[19px] mb-12 lg:mb-16`}
+      className={`w-full animate-pulse flex flex-col-reverse ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center justify-between gap-8 md:gap-12 lg:gap-4.75 mb-12 lg:mb-16`}
       aria-label="Loading section"
     >
-      <div className="flex-1 min-w-0 max-w-full lg:max-w-[530px] text-left px-1 sm:px-4 md:px-0">
+      <div className="flex-1 min-w-0 max-w-full lg:max-w-132.5 text-left px-1 sm:px-4 md:px-0">
         <div className="h-10 sm:h-12 md:h-14 lg:h-16 w-3/4 rounded-md bg-gray-200" />
         <div className="mt-4 space-y-3">
           <div className="h-4 sm:h-5 w-full rounded bg-gray-200" />
@@ -23,7 +23,7 @@ function AboutSectionSkeleton({ reverse }: { reverse?: boolean }) {
       </div>
 
       <div className="flex-1 flex items-center justify-center w-full max-w-full">
-        <div className="w-full aspect-square max-w-[350px] sm:max-w-[450px] md:max-w-[600px] lg:max-w-[730px]">
+        <div className="w-full aspect-square max-w-87.5 sm:max-w-112.5 md:max-w-150 lg:max-w-182.5">
           <div className="rounded-[20px] w-full h-full bg-gray-200" />
         </div>
       </div>

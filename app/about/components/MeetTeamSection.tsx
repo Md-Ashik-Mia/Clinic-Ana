@@ -19,8 +19,6 @@ const FALLBACK_AVATAR =
 
 function normalizeRemotePhotoUrl(raw?: string | null) {
 	const s = (raw ?? '').trim();
-	if (!s) return null;
-
 	try {
 		const u = new URL(s);
 		// API sometimes returns double slashes in pathname: //media/...
@@ -35,9 +33,20 @@ function normalizeRemotePhotoUrl(raw?: string | null) {
 
 const CARD_SIZE = 302;
 
-function DoctorCard({ doctor, fetchPriority }: { doctor: Doctor; fetchPriority?: 'high' | 'low' | 'auto' }) {
+function DoctorCard({
+	doctor,
+	fetchPriority,
+	language,
+}: {
+	doctor: Doctor;
+	fetchPriority?: 'high' | 'low' | 'auto';
+	language: 'en' | 'es';
+}) {
 	const fullName = `${doctor.first_name ?? ''} ${doctor.last_name ?? ''}`.trim();
-	const specialty = doctor.specialties?.[0]?.name;
+	const title = (language === 'es' ? doctor.title_es : null) || doctor.title || doctor.title_es;
+	const specialties = (doctor.specialties ?? [])
+		.map((item) => (language === 'es' ? item.name_es : null) || item.name || item.name_es)
+		.filter(Boolean);
 
 	const photoUrl = normalizeRemotePhotoUrl(doctor.photo);
 
@@ -52,9 +61,7 @@ function DoctorCard({ doctor, fetchPriority }: { doctor: Doctor; fetchPriority?:
 					fallbackSrc={FALLBACK_AVATAR}
 					width={CARD_SIZE}
 					height={CARD_SIZE}
-					sizes={`${CARD_SIZE}px`}
 					alt={`${doctor.first_name ?? ''} ${doctor.last_name ?? ''}`.trim() || 'Doctor photo'}
-					className="block w-full h-full object-cover"
 					priority={fetchPriority === 'high'}
 					quality={100}
 				/>
@@ -64,14 +71,18 @@ function DoctorCard({ doctor, fetchPriority }: { doctor: Doctor; fetchPriority?:
 				<h3 className="text-blackColor font-semibold text-[22px] sm:text-[26px] lg:text-[34px] leading-none">
 					{fullName || 'Doctor'}
 				</h3>
-				{doctor.title ? (
+				{title ? (
 					<p className="mt-2 text-grayColor text-[16px] sm:text-[18px] lg:text-[20px] leading-none">
-						{doctor.title}
+						{title}
 					</p>
 				) : null}
-				{specialty ? (
+				{specialties.length ? (
 					<p className="mt-2 text-grayColor text-[12px] sm:text-[13px] lg:text-[14px] leading-none">
-						{specialty}
+						{specialties.map((item, index) => (
+							<span key={`${item}-${index}`} className="block">
+								{item}
+							</span>
+						))}
 					</p>
 				) : null}
 			</div>
@@ -80,8 +91,8 @@ function DoctorCard({ doctor, fetchPriority }: { doctor: Doctor; fetchPriority?:
 }
 
 export default function MeetTeamSection() {
+	const { t, language } = useLanguage();
 	const { data, isLoading, isError } = useDoctors();
-	const { t } = useLanguage();
 	const doctors = useMemo(() => ((data ?? []) as Doctor[]), [data]);
 	const [activeIndex, setActiveIndex] = useState(0);
 
@@ -134,7 +145,7 @@ export default function MeetTeamSection() {
 				{/* Mobile/Tablet: manual switch (no auto sliding) */}
 				<div className="mt-10 lg:hidden">
 					<div className="flex items-center justify-center">
-						<DoctorCard doctor={doctors[activeIndex]} fetchPriority="high" />
+						<DoctorCard doctor={doctors[activeIndex]} fetchPriority="high" language={language} />
 					</div>
 
 					{hasMany ? (
@@ -163,7 +174,12 @@ export default function MeetTeamSection() {
 				<div className="mt-10 hidden lg:block">
 					<div className="flex gap-20  justify-center items-center">
 						{doctors.map((doctor, idx) => (
-							<DoctorCard key={String(doctor.id)} doctor={doctor} fetchPriority={idx < 2 ? 'high' : 'auto'} />
+							<DoctorCard
+								key={String(doctor.id)}
+								doctor={doctor}
+								fetchPriority={idx < 2 ? 'high' : 'auto'}
+								language={language}
+							/>
 						))}
 					</div>
 				</div>

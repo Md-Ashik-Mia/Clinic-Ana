@@ -184,7 +184,7 @@ export default function TestimonialsPreview() {
 														width={64}
 														height={64}
 														sizes="64px"
-														className="h-full w-full object-cover"
+														className="h-full w-full"
 														quality={100}
 													/>
 												) : (

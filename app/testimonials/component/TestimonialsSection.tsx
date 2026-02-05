@@ -66,7 +66,7 @@ function ReviewItem({ review }: { review: Review }) {
 						width={48}
 						height={48}
 						sizes="48px"
-						className="h-full w-full object-cover"
+						className="h-full w-full"
 						quality={100}
 					/>
 				) : (

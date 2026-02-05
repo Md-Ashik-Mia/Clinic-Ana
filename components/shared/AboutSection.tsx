@@ -68,7 +68,7 @@ export default function AboutSection({
             alt={imageAlt}
             fill
             sizes="(min-width: 1024px) 730px, (min-width: 768px) 600px, (min-width: 640px) 450px, 350px"
-            className="rounded-[20px] object-cover"
+            className="rounded-[20px]"
             quality={100}
           />
         </div>

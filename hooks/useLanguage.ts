@@ -230,7 +230,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     "page.contact.title": "Contacta con nuestro equipo de fisioterapia",
     "page.contact.description":
       "Historias reales de pacientes que han recuperado movilidad, bienestar y confianza con la ayuda de nuestro equipo.",
-    "page.services.title": "Atención integral en fisioterapia y osteopatía.",
+    "page.services.title": "Atención integral en fisioterapia y osteopatía",
     "page.services.description":
       "Desde la rehabilitación de lesiones hasta el manejo del dolor, estos son los procedimientos y técnicas más utilizados en nuestra consulta.",
     "page.testimonials.title": "Lo que dicen nuestros pacientes",

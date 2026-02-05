@@ -53,14 +53,15 @@ export default function SpecializedTreatments() {
 					{items.map((treatment) => (
 						// Prefer Spanish fields when ES is selected; fall back to English/default.
 						<div key={treatment.id} className="text-left max-w-sm mx-auto w-full">
-							<div className="relative overflow-hidden rounded-md bg-white h-56 sm:h-64 lg:h-75.5">
+							<div className="relative overflow-hidden rounded-md bg-white aspect-square">
 								<RemoteImage
 									src={treatment.photo ?? ''}
 									alt={treatment.name_eng ?? 'Treatment'}
 									fill
 									sizes="(min-width: 1024px) 302px, (min-width: 640px) 256px, 224px"
-									className="object-cover"
+									className=""
 									quality={100}
+									objectFit="fill"
 								/>
 							</div>
 

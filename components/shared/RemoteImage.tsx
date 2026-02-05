@@ -6,6 +6,7 @@ type RemoteImageProps = Omit<ImageProps, "src" | "alt"> & {
   src?: string | null;
   alt: string;
   fallbackSrc?: string;
+  objectFit?: React.CSSProperties["objectFit"];
 };
 
 function normalizeImageUrl(raw?: string | null) {
@@ -63,6 +64,7 @@ export default function RemoteImage({
   priority,
   quality,
   loading,
+  objectFit = "fill",
   ...props
 }: RemoteImageProps) {
   const normalized = normalizeImageUrl(src) || fallbackSrc || "";
@@ -79,7 +81,6 @@ export default function RemoteImage({
         top: 0,
         right: 0,
         bottom: 0,
-        objectFit: "cover",
       }
     : {};
 
@@ -89,7 +90,12 @@ export default function RemoteImage({
       alt={alt}
       loading={loading || (priority ? "eager" : "lazy")}
       {...(props as any)}
-      style={{ ...imgStyle, ...props.style }}
+      style={{
+        objectFit, // Defaults to 'cover' to prevent stretching
+        display: "block",
+        ...imgStyle,
+        ...props.style
+      }}
     />
   );
 }

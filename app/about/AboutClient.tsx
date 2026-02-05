@@ -1,15 +1,15 @@
 "use client";
 
-import AboutSection from '@/components/shared/AboutSection';
-import PageHeader from '@/components/shared/PageHeader';
-import { useAboutUsSections } from '@/hooks/useAboutUsSections';
-import { useLanguage } from '@/hooks/useLanguage';
-import MeetTeamSection from './components/MeetTeamSection';
+import AboutSection from "@/components/shared/AboutSection";
+import PageHeader from "@/components/shared/PageHeader";
+import { useAboutUsSections } from "@/hooks/useAboutUsSections";
+import { useLanguage } from "@/hooks/useLanguage";
+import MeetTeamSection from "./components/MeetTeamSection";
 
 function AboutSectionSkeleton({ reverse }: { reverse?: boolean }) {
   return (
     <section
-      className={`w-full animate-pulse flex flex-col-reverse ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center justify-between gap-8 md:gap-12 lg:gap-4.75 mb-12 lg:mb-16`}
+      className={`w-full animate-pulse flex flex-col-reverse ${reverse ? "lg:flex-row-reverse" : "lg:flex-row"} items-center justify-between gap-8 md:gap-12 lg:gap-4.75 mb-12 lg:mb-16`}
       aria-label="Loading section"
     >
       <div className="flex-1 min-w-0 max-w-full lg:max-w-132.5 text-left px-1 sm:px-4 md:px-0">
@@ -37,7 +37,10 @@ export default function AboutClient() {
 
   return (
     <div className="pt-30  lg:pt-56  pb-10 page-container">
-      <PageHeader titleKey="page.about.title1" descriptionKey="page.about.desc1" />
+      <PageHeader
+        titleKey="page.about.title1"
+        descriptionKey="page.about.desc1"
+      />
 
       <div className="mt-12 space-y-20">
         {isLoading ? (
@@ -47,26 +50,41 @@ export default function AboutClient() {
             <AboutSectionSkeleton reverse={false} />
           </>
         ) : isError ? (
-          <div className="text-center text-red-500">{t('about.errorSections')}</div>
+          <div className="text-center text-red-500">
+            {t("about.errorSections")}
+          </div>
         ) : (
           (sections ?? []).map((section) => {
-            const title = (language === 'es' ? section.title_es : null) || section.title || section.title_es || '';
+            const title =
+              (language === "es" ? section.title_es : null) ||
+              section.title ||
+              section.title_es ||
+              "";
             const highlight =
-              (language === 'es' ? section.highlight_es : null) || section.highlight || section.highlight_es || '';
+              (language === "es" ? section.highlight_es : null) ||
+              section.highlight ||
+              section.highlight_es ||
+              "";
             const description =
-              (language === 'es' ? section.description_es : null) || section.description || section.description_es || '';
+              (language === "es" ? section.description_es : null) ||
+              section.description ||
+              section.description_es ||
+              "";
             const imageAlt =
-              (language === 'es' ? section.image_alt_es : null) || section.image_alt || section.image_alt_es || '';
+              (language === "es" ? section.image_alt_es : null) ||
+              section.image_alt ||
+              section.image_alt_es ||
+              "";
 
             return (
               <AboutSection
                 key={section.id}
                 title={title}
                 highlight={highlight}
-                highlightColor={section.highlight_color ?? '#00A991'}
+                highlightColor={section.highlight_color ?? "#00A991"}
                 description={description}
                 image={section.image}
-                imageAlt={imageAlt || 'About section image'}
+                imageAlt={imageAlt || "About section image"}
                 reverse={Boolean(section.reverse)}
               />
             );

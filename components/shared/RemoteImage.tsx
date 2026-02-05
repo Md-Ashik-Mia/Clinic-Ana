@@ -25,7 +25,10 @@ function normalizeImageUrl(raw?: string | null) {
     const base = process.env.NEXT_PUBLIC_API_URL;
     if (base) {
       try {
-        const joined = new URL(s.replace(/^\/+/, ""), base.endsWith("/") ? base : `${base}/`);
+        const joined = new URL(
+          s.replace(/^\/+/, ""),
+          base.endsWith("/") ? base : `${base}/`,
+        );
         joined.pathname = joined.pathname.replace(/\/{2,}/g, "/");
         return joined.toString();
       } catch {
@@ -53,11 +56,5 @@ export default function RemoteImage({
 }: RemoteImageProps) {
   const normalized = normalizeImageUrl(src) || fallbackSrc || "";
   if (!normalized) return null;
-  return (
-    <Image
-      {...props}
-      src={normalized}
-      alt={alt}
-    />
-  );
+  return <Image {...props} src={normalized} alt={alt} />;
 }

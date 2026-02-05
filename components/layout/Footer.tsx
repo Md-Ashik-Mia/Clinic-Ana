@@ -13,6 +13,7 @@ import { MdEmail, MdLocationOn, MdPhone } from "react-icons/md";
 
 import { useClinicInfo } from "@/hooks/useClinicInfo";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useTreatments } from "@/hooks/useTreatments";
 import { useWorkingHours } from "@/hooks/useWorkingHours";
 
 type WorkingHour = {
@@ -89,6 +90,7 @@ function normalizeDayLabel(
 export default function Footer() {
   const { data: clinicInfo } = useClinicInfo();
   const { data: workingHours } = useWorkingHours();
+  const { data: treatments } = useTreatments();
   const { language, t } = useLanguage();
 
   const primaryEmail = clinicInfo?.emails?.[0] ?? "";
@@ -139,6 +141,19 @@ export default function Footer() {
       Boolean(item?.closed_days || item?.closed_days_es) || slots.length === 0;
     return { id: item.id, label, slots, isClosed };
   });
+
+  const serviceItems = (treatments ?? [])
+    .map(
+      (item) =>
+        (language === "es" ? item?.name_es || item?.title_es : null) ||
+        item?.name_eng ||
+        item?.title ||
+        item?.name_es ||
+        item?.title_es ||
+        "",
+    )
+    .filter(Boolean)
+    .slice(0, 7);
 
   return (
     <footer className="bg-[#E6F6F4] py-12">
@@ -225,12 +240,13 @@ export default function Footer() {
               {t("footer.service")}
             </h4>
             <ul className="mt-5 space-y-3 text-[18px] text-grayColor">
-              <li>{t("footer.service.sports")}</li>
-              <li>{t("footer.service.postSurgical")}</li>
-              <li>{t("footer.service.pain")}</li>
-              <li>{t("footer.service.neuro")}</li>
-              <li>{t("footer.service.ortho")}</li>
-              <li>{t("footer.service.pediatric")}</li>
+              {serviceItems.length ? (
+                serviceItems.map((item, index) => (
+                  <li key={`${item}-${index}`}>{item}</li>
+                ))
+              ) : (
+                <li>-</li>
+              )}
             </ul>
           </div>
 

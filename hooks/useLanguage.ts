@@ -31,26 +31,26 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
 
     "page.contact.title": "Contact Our Physiotherapy Team",
     "page.contact.description":
-      "Real stories of patients who have regained mobility, well-being, and confidence with the support of our team.",
+      "Real stories of patients who have regained mobility, well-being, and confidence with the support of our team",
     "page.services.title":
-      "Comprehensive care in physiotherapy and osteopathy.",
+      "Comprehensive care in physiotherapy and osteopathy",
     "page.services.description":
-      "From injury rehabilitation to pain management, these are the procedures and techniques most commonly used in our practice.",
+      "From injury rehabilitation to pain management, these are the procedures and techniques most commonly used in our practice",
     "page.testimonials.title": "What Our Patient Say",
     "page.testimonials.description":
-      "Hear real stories from patients who regained strength, mobility, and confidence through our care.",
+      "Hear real stories from patients who regained strength, mobility, and confidence through our care",
     "page.about.title1": "Dedicated to Your Recovery",
     "page.about.desc1":
       "Our clinic is staffed by highly trained and experienced therapists focused on identifying the root cause of your symptoms and guiding you toward an effective and lasting recovery.",
     "page.about.title2": "Physiotherapy Care",
     "page.about.desc2":
-      "Our hospital is dedicated to delivering high-quality physiotherapy services in a safe and professional environment. With modern facilities and patient-focused care, we aim to support recovery, improve mobility, and enhance overall quality of life for every individual we serve.",
+      "Our hospital is dedicated to delivering high-quality physiotherapy services in a safe and professional environment. With modern facilities and patient-focused care, we aim to support recovery, improve mobility, and enhance overall quality of life for every individual we serve",
     "page.about.title3": "Care for Every Patient",
     "page.about.desc3":
-      "We provide personalized treatment plans, flexible appointment options, and continuous guidance throughout the recovery process. Our goal is to ensure each patient feels supported, informed, and confident at every stage of their therapy journey.",
+      "We provide personalized treatment plans, flexible appointment options, and continuous guidance throughout the recovery process. Our goal is to ensure each patient feels supported, informed, and confident at every stage of their therapy journey",
     "page.about.title4": "Physiotherapy Specialists",
     "page.about.desc4":
-      "Our team consists of experienced and certified physiotherapists who specialize in various rehabilitation and pain management techniques. We are committed to delivering the highest standard of care, tailored to individual needs.",
+      "Our team consists of experienced and certified physiotherapists who specialize in various rehabilitation and pain management techniques. We are committed to delivering the highest standard of care, tailored to individual needs",
 
     "about.highlight.trusted": "Trusted",
     "about.highlight.focused": "Focused",
@@ -58,7 +58,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     "team.title.green": "Meet",
     "team.title.black": " the Team",
     "team.description":
-      "Our team consists of two physiotherapists and a podiatrist, all trained and experienced in various areas of rehabilitation and pain management, as well as in analyzing biomechanical issues that may affect your body.",
+      "Our team consists of two physiotherapists and a podiatrist, all trained and experienced in various areas of rehabilitation and pain management, as well as in analyzing biomechanical issues that may affect your body",
     "team.prev": "Previous doctor",
     "team.next": "Next doctor",
     "team.loading": "Loading doctors...",
@@ -86,10 +86,10 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
 
     "contact.bookDirect.title": "Prefer to book directly?",
     "contact.bookDirect.subtitle":
-      "Visit our clinic for quick appointments and in-person support. Find us on the map below and book instantly.",
+      "Visit our clinic for quick appointments and in-person support. Find us on the map below and book instantly",
 
     "footer.about":
-      "We provide expert physiotherapy care to help you recover, stay active, and live a pain-free life. Your health and well-being are our top priority.",
+      "We provide expert physiotherapy care to help you recover, stay active, and live a pain-free life. Your health and well-being are our top priority",
     "footer.quickLinks": "Quick Links",
     "footer.service": "Service",
     "footer.time": "Time",
@@ -128,19 +128,19 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     "home.hero.physiotherapy": "Physiotherapy and Osteopathy ",
     "home.hero.tagline": "for Pain Relief & Mobility",
     "home.hero.description":
-      "Experienced professionals who support you in a friendly and supportive environment, focused on improving your quality of life.",
+      "Experienced professionals who support you in a friendly and supportive environment, focused on improving your quality of life",
     "home.hero.bookOnWhatsapp": "Book on WhatsApp",
     "home.hero.viewTreatments": "View Treatments",
 
     "home.cta.titleGreen": "Ready",
     "home.cta.titleBlack": " to Feel Better?",
     "home.cta.descriptionLine1":
-      "Let our specialists help you restore mobility, relieve pain, and get back to what you love.",
+      "Let our specialists help you restore mobility, relieve pain, and get back to what you love",
     "home.cta.descriptionLine2": "Your healing journey starts today.",
     "home.cta.consultWithOur": "Consult With Our",
     "home.cta.physiotherapists": "Physiotherapists",
     "home.cta.leftDescription":
-      "Let our expert therapists understand your condition and design a personalized treatment plan.",
+      "Let our expert therapists understand your condition and design a personalized treatment plan",
     "home.cta.form.name": "Name",
     "home.cta.form.email": "Email",
     "home.cta.form.phone": "Phone",
@@ -154,30 +154,30 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     "home.whyChooseUs.titleGreen": "Why ",
     "home.whyChooseUs.titleBlack": "Choose Us",
     "home.whyChooseUs.descriptionLine1":
-      "With a patient-centered approach and evidence-based therapies, we provide the care you need.",
+      "With a patient-centered approach and evidence-based therapies, we provide the care you need",
     "home.whyChooseUs.descriptionLine2":
-      "From precise assessments to ongoing support, we guide you through every step of your recovery process.",
+      "From precise assessments to ongoing support, we guide you through every step of your recovery process",
     "home.whyChooseUs.features.expertTherapists.title": "Expert Therapists",
     "home.whyChooseUs.features.expertTherapists.description":
-      "Certified and trained physiotherapists, dedicated to providing accurate diagnoses and tailored treatments.",
+      "Certified and trained physiotherapists, dedicated to providing accurate diagnoses and tailored treatments",
     "home.whyChooseUs.features.personalizedCare.title": "Personalized Care",
     "home.whyChooseUs.features.personalizedCare.description":
-      "Each treatment plan is tailored to your condition, goals, and lifestyle, ensuring optimal recovery.",
+      "Each treatment plan is tailored to your condition, goals, and lifestyle, ensuring optimal recovery",
     "home.whyChooseUs.features.modernTechniques.title": "Modern Techniques",
     "home.whyChooseUs.features.modernTechniques.description":
       "We use modern, up-to-date techniques to achieve the best results.",
     "home.whyChooseUs.features.friendlyEnvironment.title": "Warm Environment",
     "home.whyChooseUs.features.friendlyEnvironment.description":
-      "A calm and welcoming space where your well-being and comfort are our top priority.",
+      "A calm and welcoming space where your well-being and comfort are our top priority",
 
     "home.specializedTreatments.loading": "Loading treatments...",
-    "home.specializedTreatments.error": "Failed to load treatments.",
+    "home.specializedTreatments.error": "Failed to load treatments",
     "home.specializedTreatments.titleGreen": "Specialized ",
     "home.specializedTreatments.titleBlack": "Treatments",
     "home.specializedTreatments.descriptionLine1":
-      "We offer advanced therapies tailored to each patient’s needs.",
+      "We offer advanced therapies tailored to each patient’s needs",
     "home.specializedTreatments.descriptionLine2":
-      "Our goal is to identify the root cause of the symptoms.",
+      "Our goal is to identify the root cause of the symptoms",
 
     "home.testimonialsPreview.title": "Testimonial",
     "home.testimonialsPreview.descriptionLine1":

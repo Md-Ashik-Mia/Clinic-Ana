@@ -1,6 +1,6 @@
 "use client";
 
-import Image, { type ImageProps } from "next/image";
+import { type ImageProps } from "next/image";
 
 type RemoteImageProps = Omit<ImageProps, "src" | "alt"> & {
   src?: string | null;
@@ -59,26 +59,37 @@ export default function RemoteImage({
   src,
   fallbackSrc,
   alt,
+  fill,
+  priority,
+  quality,
+  loading,
   ...props
 }: RemoteImageProps) {
   const normalized = normalizeImageUrl(src) || fallbackSrc || "";
 
   if (!normalized) return null;
 
-  // If it's a local public image, use standard Image
-  if (normalized.startsWith("/") && !normalized.startsWith("//")) {
-    return <Image {...props} src={normalized} alt={alt} />;
-  }
+  // Handle 'fill' manually for standard img tag
+  const imgStyle: React.CSSProperties = fill
+    ? {
+        position: "absolute",
+        height: "100%",
+        width: "100%",
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        objectFit: "cover",
+      }
+    : {};
 
-  // Use next/image for remote images as well (configured in next.config.ts)
   return (
-    <Image
-      {...props}
+    <img
       src={normalized}
       alt={alt}
-      // If the user hasn't configured remotePatterns correctly,
-      // they might need unoptimized={true}.
-      // But we'll trust their next.config.ts for now.
+      loading={loading || (priority ? "eager" : "lazy")}
+      {...(props as any)}
+      style={{ ...imgStyle, ...props.style }}
     />
   );
 }

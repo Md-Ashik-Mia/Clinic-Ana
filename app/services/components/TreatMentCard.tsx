@@ -35,7 +35,6 @@ export default function TreatMentCard({ treatment }: TreatMentCardProps) {
           sizes="(min-width: 1024px) 464px, (min-width: 768px) 340px, (min-width: 640px) 280px, 220px"
           className="rounded-2xl transition-all"
           quality={100}
-          objectFit="fill"
         />
       </div>
       <div className="flex flex-col items-center px-2 sm:px-4 pb-4 sm:pb-6 pt-3 sm:pt-4 text-center w-full">

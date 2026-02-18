@@ -61,7 +61,6 @@ export default function SpecializedTreatments() {
 									sizes="(min-width: 1024px) 302px, (min-width: 640px) 256px, 224px"
 									className=""
 									quality={100}
-									objectFit="fill"
 								/>
 							</div>
 

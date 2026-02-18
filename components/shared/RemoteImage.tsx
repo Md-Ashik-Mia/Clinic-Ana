@@ -64,7 +64,8 @@ export default function RemoteImage({
   priority,
   quality,
   loading,
-  objectFit = "fill",
+  objectFit,
+  className,
   ...props
 }: RemoteImageProps) {
   const normalized = normalizeImageUrl(src) || fallbackSrc || "";
@@ -84,14 +85,22 @@ export default function RemoteImage({
       }
     : {};
 
+  const resolvedClassName = [
+    className,
+    objectFit ? null : "object-fill lg:object-cover lg:object-top",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <img
       src={normalized}
       alt={alt}
       loading={loading || (priority ? "eager" : "lazy")}
       {...(props as any)}
+      className={resolvedClassName}
       style={{
-        objectFit, // Defaults to 'cover' to prevent stretching
+        ...(objectFit ? { objectFit, objectPosition: "center" } : {}),
         display: "block",
         ...imgStyle,
         ...props.style

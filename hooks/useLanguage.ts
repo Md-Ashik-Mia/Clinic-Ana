@@ -396,7 +396,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     "contact.info.emailTitle": "Correo electrónico",
     "contact.info.phoneTitle": "Número de teléfono",
     "contact.info.locationTitle": "Ubicación de la clínica",
-    "contact.info.workingDayTitle": "Día laborable",
+    "contact.info.workingDayTitle": "Horario",
 
     "testimonials.recentFeedbacks": "Comentarios recientes",
     "testimonials.addReview": "Añadir una reseña",

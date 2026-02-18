@@ -65,23 +65,27 @@ function DoctorCard({
       </div>
 
       <div className="mt-4 text-center">
-        <h3 className="text-blackColor font-semibold text-[22px] sm:text-[26px] lg:text-[34px] leading-none">
+        <h3 className="text-blackColor font-semibold text-[22px] sm:text-[26px] lg:text-[34px] leading-tight min-h-[64px]">
           {fullName || "Doctor"}
         </h3>
-        {title ? (
-          <p className="mt-2 text-grayColor text-[16px] sm:text-[18px] lg:text-[20px] leading-none">
-            {title}
-          </p>
-        ) : null}
-        {specialties.length ? (
-          <p className="mt-2 text-grayColor text-[12px] sm:text-[13px] lg:text-[14px] leading-none">
-            {specialties.map((item, index) => (
-              <span key={`${item}-${index}`} className="block">
-                {item}
-              </span>
-            ))}
-          </p>
-        ) : null}
+        <div className="min-h-[26px]">
+          {title ? (
+            <p className="text-grayColor text-[16px] sm:text-[18px] lg:text-[20px] leading-tight">
+              {title}
+            </p>
+          ) : null}
+        </div>
+        <div className="mt-2 min-h-[36px]">
+          {specialties.length ? (
+            <p className="text-grayColor text-[12px] sm:text-[13px] lg:text-[14px] leading-tight">
+              {specialties.map((item, index) => (
+                <span key={`${item}-${index}`} className="block">
+                  {item}
+                </span>
+              ))}
+            </p>
+          ) : null}
+        </div>
       </div>
     </div>
   );
@@ -173,7 +177,7 @@ export default function MeetTeamSection() {
 
         {/* Desktop (lg+): auto right-to-left slide */}
         <div className="mt-10 hidden lg:block">
-          <div className="flex gap-20  justify-center items-center">
+          <div className="flex gap-20  justify-center items-start">
             {doctors.map((doctor, idx) => (
               <DoctorCard
                 key={String(doctor.id)}

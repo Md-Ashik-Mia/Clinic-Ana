@@ -17,7 +17,6 @@ const FALLBACK_AVATAR =
   <rect x="180" y="480" width="440" height="220" rx="110" fill="#CBD5E1"/>
 </svg>`);
 
-
 const CARD_SIZE = 302;
 
 function DoctorCard({

@@ -103,7 +103,7 @@ export default function RemoteImage({
         ...(objectFit ? { objectFit, objectPosition: "center" } : {}),
         display: "block",
         ...imgStyle,
-        ...props.style
+        ...props.style,
       }}
     />
   );

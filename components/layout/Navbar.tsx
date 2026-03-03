@@ -194,7 +194,7 @@ export default function Navbar() {
         <Link href="/" onClick={() => setMobileOpen(false)}>
           <Image
             src="/images/logo/logo.png"
-            alt="Anaespana Clinic Logo"
+            alt="Fisioterapia y osteopatía Ana España Logo"
             width={140}
             height={20}
             className="mb-4"

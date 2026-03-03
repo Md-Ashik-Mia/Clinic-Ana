@@ -14,10 +14,10 @@ const lato = Lato({
 
 export const metadata: Metadata = {
   title: {
-    default: "Anaespana Clinic",
-    template: "%s | Anaespana Clinic",
+    default: "Fisioterapia y osteopatía Ana España",
+    template: "%s | Fisioterapia y osteopatía Ana España",
   },
-  description: "Anaespana Clinic",
+  description: "Clínica de fisioterapia y osteopatía Ana España en Tarifa. Especialistas en rehabilitación, dolor y bienestar.",
   icons: {
     icon: "/images/fabicon/favicon.ico",
     shortcut: "/images/fabicon/favicon.ico",

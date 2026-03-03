@@ -93,9 +93,9 @@ export default function Footer() {
   const { data: treatments } = useTreatments();
   const { language, t } = useLanguage();
 
-  const primaryEmail = clinicInfo?.emails?.[0] ?? "";
-  const primaryPhone = clinicInfo?.phone_numbers?.[0] ?? "";
-  const location = clinicInfo?.location ?? "";
+  const primaryEmail = clinicInfo?.emails?.[0] ?? "anaespanaro@gmail.com";
+  const primaryPhone = clinicInfo?.phone_numbers?.[0] ?? "+34 618 571 959";
+  const location = clinicInfo?.location ?? "C/ Batalla del Salado 55, 11380 Tarifa (Cádiz)";
 
   const socials = [
     {
@@ -286,8 +286,14 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 text-blackColor text-sm">
-          {t("footer.copyright")}
+        <div className="mt-12 pt-8 border-t border-[#B0DED7] flex flex-col md:flex-row justify-between items-center gap-6 text-blackColor text-sm">
+          <p>{t("footer.copyright")}</p>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+            <Link href="/legal-notice" className="hover:text-[#00A991] transition-colors">{t("legal.notice.title")}</Link>
+            <Link href="/privacy-policy" className="hover:text-[#00A991] transition-colors">{t("legal.privacy.title")}</Link>
+            <Link href="/cookie-policy" className="hover:text-[#00A991] transition-colors">{t("legal.cookies.title")}</Link>
+            <Link href="/terms-conditions" className="hover:text-[#00A991] transition-colors">{t("legal.terms.title")}</Link>
+          </div>
         </div>
       </div>
     </footer>

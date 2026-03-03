@@ -1,14 +1,14 @@
 "use client";
 
 import {
-    createContext,
-    createElement,
-    useCallback,
-    useContext,
-    useEffect,
-    useMemo,
-    useState,
-    type ReactNode,
+  createContext,
+  createElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
 } from "react";
 
 export type Language = "en" | "es";
@@ -32,8 +32,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     "page.contact.title": "Contact Our Physiotherapy Team",
     "page.contact.description":
       "Real stories of patients who have regained mobility, well-being, and confidence with the support of our team",
-    "page.services.title":
-      "Comprehensive care in physiotherapy and osteopathy",
+    "page.services.title": "Comprehensive care in physiotherapy and osteopathy",
     "page.services.description":
       "From injury rehabilitation to pain management, these are the procedures and techniques most commonly used in our practice",
     "page.testimonials.title": "What Our Patient Say",
@@ -83,6 +82,11 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     "toast.contact.success":
       "Message sent successfully. We will contact you soon.",
     "toast.contact.error": "Failed to send message. Please try again.",
+    "legal.notice.content": "In compliance with Article 10 of Law 34/2002 on Information Society Services and Electronic Commerce (LSSI-CE), the following information is provided regarding this website:\n\n**Owner:** Ana España Rodríguez\n\n**Trading Name:** Fisioterapia y osteopatía Ana España\n\n**Tax ID (NIF/CIF):** 15458762W\n\n**Registered Address:** C/Batalla del Salado 55, 11380 Tarifa (Cádiz)\n\n**Telephone:** +34618571959\n\n**Email:** anaespanaro@gmail.com\n\n**Professional Registration Number:** 6935\n\nThis website aims to provide information about the physiotherapy services offered by the clinic, as well as to allow users to request appointments and contact the clinic.\n\nAccessing and using this website grants the status of user and implies full acceptance of the terms set out herein. The user undertakes to make appropriate use of the website and not to use it for unlawful activities or activities contrary to good faith and public order.\n\nAll website content, including texts, images, logos, design, structure and source code, is protected by intellectual and industrial property rights. Reproduction, distribution or public communication without the express authorization of the owner is strictly prohibited.\n\nThe owner shall not be held liable for misuse of the website content or for any damages arising from access to or use of the website.",
+    "legal.privacy.content": "**Data Controller:** Ana España Rodríguez\n\n**Tax ID:** 15458762W\n\n**Address:** C/Batalla del Salado 55, 11380 Tarifa (Cádiz)\n\n**Email:** anaespanaro@gmail.com\n\nPersonal data collected through this website will be processed for the following purposes:\n\n*   Online appointment management.\n*   Responding to inquiries submitted through contact forms.\n*   Administrative, accounting and tax management.\n*   Management of patient clinical records.\n*   Sending commercial communications, where the data subject has provided consent.\n\nThe legal basis for processing is the data subject’s consent, the performance of a healthcare service contract, and compliance with legal obligations in healthcare matters. Health data is processed in accordance with Article 9.2(h) of Regulation (EU) 2016/679 (GDPR).\n\nData will be retained for the duration of the professional relationship and for the periods required by applicable healthcare and tax regulations.\n\nPersonal data will not be disclosed to third parties unless legally required. Service providers such as IT hosting companies, accounting advisors and banking institutions may have access to data under appropriate data processing agreements.\n\nData subjects may exercise their rights of access, rectification, erasure, objection, restriction of processing and data portability by sending a request together with a copy of their identification document to anaespanaro@gmail.com. They also have the right to lodge a complaint with the Spanish Data Protection Authority.",
+    "legal.cookies.content": "This website uses first-party and third-party cookies to improve user experience.\n\nCookies may be technical (necessary for website operation), analytical (to measure website usage), or personalization cookies.\n\nUsers may accept, reject or configure cookie preferences through the settings panel available upon accessing the website. Cookies may also be deleted through the browser settings.",
+    "legal.terms.content": "The clinic provides physiotherapy services delivered by qualified and licensed professionals in accordance with Spanish regulations.\n\nAppointments must be cancelled at least 24 hours in advance. Failure to attend without prior notice may result in the application of the clinic’s cancellation policy.\n\nAll prices include applicable taxes. The clinic reserves the right to modify prices at any time.\n\nHealthcare treatments do not guarantee specific results, as outcomes depend on individual patient factors.",
+    "contact.form.privacyConsent": "I have read and accept the Privacy Policy and I consent to the processing of my personal data for the purpose of managing my inquiry.",
 
     "contact.bookDirect.title": "Prefer to book directly?",
     "contact.bookDirect.subtitle":
@@ -95,8 +99,11 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     "footer.time": "Time",
     "footer.noDays": "No specific days",
     "footer.closed": "(Closed)",
-    "footer.copyright":
-      "© 2024 Clinic Name | Privacy Policy | Terms of Service",
+    "footer.copyright": "© 2026 Ana España Rodríguez",
+    "legal.notice.title": "Legal Notice",
+    "legal.privacy.title": "Privacy Policy",
+    "legal.cookies.title": "Cookie Policy",
+    "legal.terms.title": "General Terms and Conditions",
     "footer.service.sports": "Sports Injury Rehabilitation",
     "footer.service.postSurgical": "Post-Surgical Therapy",
     "footer.service.pain": "Pain Management Therapy",
@@ -280,6 +287,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     "toast.contact.success":
       "Mensaje enviado correctamente. Nos pondremos en contacto pronto.",
     "toast.contact.error": "No se pudo enviar el mensaje. Inténtalo de nuevo.",
+    "contact.form.privacyConsent": "Consiento el tratamiento de mis datos personales, incluidos datos relativos a mi salud que pueda facilitar en el mensaje, con la finalidad de gestionar mi consulta, conforme al Reglamento (UE) 2016/679.",
 
     "contact.bookDirect.title": "¿Prefieres reservar directamente?",
     "contact.bookDirect.subtitle":
@@ -292,8 +300,11 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     "footer.time": "Horario",
     "footer.noDays": "Sin días específicos",
     "footer.closed": "(Cerrado)",
-    "footer.copyright":
-      "© 2024 Clinic Name | Política de privacidad | Términos del servicio",
+    "footer.copyright": "© 2026 Ana España Rodríguez",
+    "legal.notice.title": "Aviso Legal",
+    "legal.privacy.title": "Política de Privacidad",
+    "legal.cookies.title": "Política de Cookies",
+    "legal.terms.title": "Condiciones Generales de Contratación",
     "footer.service.sports": "Rehabilitación de lesiones deportivas",
     "footer.service.postSurgical": "Terapia postquirúrgica",
     "footer.service.pain": "Terapia para manejo del dolor",
@@ -417,6 +428,10 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     "testimonials.toast.success": "Reseña enviada correctamente.",
     "testimonials.toast.error":
       "No se pudo enviar la reseña. Inténtalo de nuevo.",
+    "legal.notice.content": "En cumplimiento de lo dispuesto en el artículo 10 de la Ley 34/2002, de Servicios de la Sociedad de la Información y Comercio Electrónico (LSSI-CE), se informa que el presente sitio web es titularidad de:\n\n**Titular:** Ana España Rodríguez\n\n**Nombre comercial:** Fisioterapia y osteopatía Ana España\n\n**NIF/CIF:** 15458762W\n\n**Domicilio social:** C/Batalla del Salado 55, 11380 Tarifa (Cádiz)\n\n**Teléfono:** +34618571959\n\n**Correo electrónico:** anaespanaro@gmail.com\n\n**Número de colegiado:** 6935\n\nEl sitio web tiene como finalidad ofrecer información sobre los servicios de fisioterapia prestados por la clínica, así como permitir la solicitud de citas y el contacto con los usuarios.\n\nEl acceso y uso del sitio web atribuye la condición de usuario e implica la aceptación de las condiciones aquí recogidas. El usuario se compromete a hacer un uso adecuado del sitio web y a no emplearlo para actividades ilícitas o contrarias a la buena fe y al orden público.\n\nTodos los contenidos del sitio web, incluyendo textos, imágenes, logotipos, diseño, estructura y código fuente, están protegidos por derechos de propiedad intelectual e industrial. Queda prohibida su reproducción, distribución o comunicación pública sin autorización expresa del titular.\n\nEl titular no se responsabiliza del mal uso de los contenidos del sitio web ni de los daños que puedan derivarse del acceso o uso del mismo.",
+    "legal.privacy.content": "**Responsable del tratamiento:** Ana España Rodríguez\n\n**NIF/CIF:** 15458762W\n\n**Dirección:** C/Batalla del Salado 55, 11380 Tarifa (Cádiz)\n\n**Correo electrónico:** anaespanaro@gmail.com\n\nLos datos personales recogidos a través de este sitio web serán tratados con las siguientes finalidades:\n\n*   Gestión de citas online.\n*   Atención de consultas realizadas a través de formularios.\n*   Gestión administrativa, contable y fiscal.\n*   Gestión del historial clínico del paciente.\n*   Envío de comunicaciones comerciales, en caso de contar con el consentimiento del interesado.\n\nLa base legal para el tratamiento es el consentimiento del interesado, la ejecución del contrato de prestación de servicios sanitarios y el cumplimiento de obligaciones legales en materia sanitaria. En el caso de datos de salud, el tratamiento se realiza conforme al artículo 9.2.h del Reglamento (UE) 2016/679.\n\nLos datos se conservarán mientras exista relación profesional y durante los plazos exigidos por la normativa sanitaria y fiscal aplicable.\n\nNo se cederán datos a terceros salvo obligación legal. Podrán tener acceso a los datos proveedores de servicios tecnológicos, asesoría fiscal y contable y entidades bancarias, con los correspondientes contratos de encargado de tratamiento.\n\nEl interesado puede ejercer sus derechos de acceso, rectificación, supresión, oposición, limitación del tratamiento y portabilidad enviando solicitud junto con copia de su documento de identidad a anaespanaro@gmail.com. Asimismo, puede presentar reclamación ante la Agencia Española de Protección de Datos.",
+    "legal.cookies.content": "Este sitio web utiliza cookies propias y de terceros para mejorar la experiencia del usuario.\n\nLas cookies pueden ser técnicas, necesarias para el funcionamiento del sitio web; de análisis, para medir el uso del sitio; o de personalización.\n\nEl usuario puede aceptar, rechazar o configurar el uso de cookies a través del panel de configuración habilitado al acceder al sitio web. Asimismo, puede eliminarlas mediante la configuración de su navegador.",
+    "legal.terms.content": "La clínica ofrece servicios de fisioterapia realizados por profesionales titulados y colegiados conforme a la normativa española vigente.\n\nLas citas deberán cancelarse con al menos 24 horas de antelación. En caso de no asistencia sin previo aviso, la clínica podrá aplicar la política de cobro establecida.\n\nLos precios indicados incluyen los impuestos aplicables. La clínica se reserva el derecho a modificar los precios.\n\nLos tratamientos sanitarios no garantizan resultados específicos, ya que estos dependen de factores individuales de cada paciente.",
   },
 };
 

@@ -175,6 +175,18 @@ export default function CTASection() {
 										</div>
 									</div>
 
+									<div className="mt-5 flex items-start gap-3">
+										<input
+											type="checkbox"
+											id="ctaPrivacyConsent"
+											required
+											className="mt-1 h-4 w-4 rounded border-gray-300 text-[#00A991] focus:ring-[#00A991]"
+										/>
+										<label htmlFor="ctaPrivacyConsent" className="text-[13px] text-grayColor leading-snug cursor-pointer select-none">
+											{t('contact.form.privacyConsent')}
+										</label>
+									</div>
+
 									<div className="mt-6 flex items-center justify-start  gap-4">
 										<button
 											type="submit"

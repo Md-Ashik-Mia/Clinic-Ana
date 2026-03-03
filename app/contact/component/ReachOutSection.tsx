@@ -164,6 +164,18 @@ export default function ReachOutSection() {
                   />
                 </div>
 
+                <div className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    id="privacyConsent"
+                    required
+                    className="mt-1 h-4 w-4 rounded border-gray-300 text-[#00A991] focus:ring-[#00A991]"
+                  />
+                  <label htmlFor="privacyConsent" className="text-[14px] text-[#525252] leading-snug cursor-pointer select-none">
+                    {t('contact.form.privacyConsent')}
+                  </label>
+                </div>
+
                 <div className="pt-2 flex items-center gap-4">
                   <button
                     type="submit"
